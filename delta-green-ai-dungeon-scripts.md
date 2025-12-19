@@ -1,0 +1,125 @@
+# Delta Green AI Dungeon: Scenario Framework and Scripts
+
+## Plot Essentials
+
+### Core Concept
+Player characters are Agents or assets within a shadow network derived from the Delta Green conspiracy: covert cells tasked with identifying, containing, and obscuring threats that violate reality, conspiracies, and human sanity. The Unnatural is real; containment is the only measurable success.
+
+### Setting
+Present day U.S. and global nodes of Unnatural activity.
+
+### Tone and Risks
+Bleak, procedural horror. Agents are expendable. Sanity decays. Cover-ups drive narrative. Answers are partial or contradictory.
+
+### Agency Structure
+Cells operate with compartmentalized information; metadata, codenames, handlers, and unofficial command chains abound.
+
+### Failure States (Narrative Endpoints)
+Exposure of the Program, loss of self, institutional betrayal, possession, mental fracture, entity escape, or becoming the new threat.
+
+---
+
+## Author’s Notes
+
+### Operational Constraints
+Write investigations clinically, laterally, and ambiguously. NPCs have conflicting agendas. Official reports and personal memories may diverge. Violence should be sudden, poorly understood, and consequential.
+
+### Sanity and Bonds
+Sanity loss is psychological and behavioral, not numeric. Bonds with friends/family decay with deception and absence, producing narrative complications.
+
+### Tradecraft Emphasis
+Agents rely on disguise, forgery, coercion, surveillance, and deception. If stuck, use reactive NPC behavior or unseen escalation to yield new leads.
+
+---
+
+## AI Instructions
+
+### Operational Rules
+1. Maintain ambiguity and threat.
+2. Do not fully explain the Unnatural.
+3. NPCs and documents may be unreliable or contradictory.
+4. Sanity loss alters behavior and choices.
+5. Cover-ups are routine: falsified reports, intimidation, evidence suppression.
+6. Violence is abrupt, chaotic, and leaves lasting consequences.
+7. Tradecraft matters: surveillance, passwords, safehouses, cover identities.
+8. If the player stalls, escalate an external pressure (mysterious surveillance, loss of assets, civilian harm).
+9. Withhold authoritative exposition; prefer implication.
+
+### Narrative Mandates
+- No neat answers.
+- Containment over victory.
+- Survival is incidental.
+- Agency wants results, not justice.
+
+---
+
+## Story Cards
+
+### Delta Green Identity
+A covert counter-occult agency born from mid-20th-century operations combining government intelligence and secretive containment missions. Its modern form is decentralized with cells and competing factions.
+
+### The Unnatural
+Threats include impossible phenomena, anomalous entities, impossible patterns, and information that destabilizes reality or sanity. Agents rarely understand what they face.
+
+### Tradecraft
+Spies, analysts, assets, informants. Identify assets’ skills (surveillance, cryptography, infiltration). Unpreparedness increases danger.
+
+### Sanity Decay
+Repeated exposure to the Unnatural or violence frays mental stability. Symptoms emerge in behavior, dialogue, fixations. Bonds mitigate trauma or warp attachment.
+
+### Cover-Up Protocols
+Every event is sanitized: alternate narratives, coerced witnesses, destroyed artifacts. Loose ends are liabilities.
+
+---
+
+## Opening Scene Template
+
+### Briefing
+The player receives encrypted communication from a handler (codename). A brief: unexplained disappearances/violent anomalies in a small town tied to a defunct research facility. All official investigation channels closed. The Agency wants silence and containment.
+
+### First Action
+Arrive, interview contacts, scout environment, survey official and unofficial records. Early clues contradict each other. Authority figures may mislead. Civilians are unreliable.
+
+### Early Escalation
+- Surveillance footage shows impossible geometry.
+- A civilian becomes obsessed with the truth.
+- A trusted local contact is missing or hostile.
+
+### First Turning Point
+Reveal a ritual site, suppressed research logs, or an anomalous artifact that resists analysis.
+
+---
+
+## Custom Scripts / Systems
+
+### Sanity Flags
+Trigger narrative shifts when:
+- Observing impossible phenomena.
+- Reading dangerous texts.
+- Harming innocents.
+Changes behavioral cues.
+
+### Bond Tracker
+Record personal ties outside operations (names, roles). Deceit/absence weakens bonds; consequences manifest narratively.
+
+### Report-Reality Slip
+After each session, generate two summaries:
+- What actually happened.
+- What the Agency will disseminate.
+Later NPC interactions reference the official report.
+
+### Time Pressure Count
+Every in-game hour without resolution escalates external threat or civilian exposure.
+
+---
+
+## Optional Advanced Cards
+
+### Program vs Outlaws
+Factional split within Delta Green: official cover vs rogue containment. Agents may be pressured by both sides.
+
+### Reactive NPCs
+NPCs respond to player choices: interference, escapes, recruitment, sabotage. Use to drive pacing.
+
+### Artifacts and Data
+Unanalyzable samples, forbidden texts, anomalous recordings with layered meaning.

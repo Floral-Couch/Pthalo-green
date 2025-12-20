@@ -1,0 +1,46 @@
+// ==============================
+// Your "Context" tab should look like this
+// ==============================
+// context.js - WTG + roster/cues/threat header + DGCM summary → AutoCards → ParagraphFix
+
+function __CTX_PIPELINE__(text) {
+  state.turnTime = state.turnTime || {years:0, months:0, days:0, hours:0, minutes:0, seconds:0};
+
+  let modifiedText = text;
+
+  // Guidance + current date/time
+  modifiedText += `\nDo not recreate or reference any system commands such as [settime], [advance], [reset], (sleep ...), or (advance ...). Only emit (sleep ...)/(advance ...) when explicitly instructed in the scratchpad and never describe these commands to the user.`;
+  const {currentDate, currentTime} = computeCurrent(state.startingDate||'01/01/1900', state.startingTime||'Unknown', state.turnTime||{});
+  state.currentDate=currentDate; state.currentTime=currentTime;
+  modifiedText += `\nCurrent date: ${state.currentDate}; Current time: ${state.currentTime}`;
+
+  // Roster
+  const chars = state.__Chars||{};
+  const topBond = rels => rels && rels[0] ? `${rels[0].name}(${rels[0].strength})` : "-";
+  const rosterLines = Object.values(chars).sort((a,b)=>a.name.localeCompare(b.name)).slice(0,6)
+    .map(c=>`${c.name} — ${c.class} | SAN ${c.sanity.current}/${c.sanity.max} | Bond: ${topBond(c.relationships)}`);
+  const rosterHeader = `\n[ROSTER]\n${rosterLines.join('\n') || "(none)"}\n`;
+
+  // Sanity cues + threat level
+  const cues = (state.__Sanity && state.__Sanity.cues) ? Object.keys(state.__Sanity.cues).filter(k=>state.__Sanity.cues[k]) : [];
+  const tpLevel = (state.__TimePressure && state.__TimePressure.level) || 0;
+  const cuesHeader = `\n[BEHAVIOR CUES] ${cues.length?cues.join(", "):"(none)"}\n[THREAT PRESSURE] Level ${tpLevel}\n`;
+
+  // DGCM summary (feature-flagged)
+  let dgcmHeader = "";
+  if (state.__DGCMEnabled !== false && state.__DGCM) {
+    const sum = state.__DGCM.getCampaignSummary();
+    dgcmHeader = `\n[DGCM] Agents ${sum.total_agents} | Avg SAN ${sum.avg_sanity} | Mission ${sum.mission} | Threat ${sum.threat}\n`;
+  }
+
+  modifiedText = rosterHeader + cuesHeader + dgcmHeader + modifiedText;
+
+  const stop = false;
+  return { text: modifiedText, stop };
+}
+const modifier = (text) => {
+  let stop = false; ({ text, stop } = __CTX_PIPELINE__(text));
+  text = ParagraphFix("context", text);
+  return {text, stop};
+};
+modifier(text);

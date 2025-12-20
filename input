@@ -1,0 +1,123 @@
+// ==============================
+// Your "Input" tab should look like this
+// ==============================
+// input.js - WTG + AutoCards + Character commands (+ resolve)
+
+function __IN_PIPELINE__(text) {
+  state.turnTime = state.turnTime || {years:0, months:0, days:0, hours:0, minutes:0, seconds:0};
+  if (state.startingDate === undefined) {
+    state.startingDate = '01/01/1900'; state.startingTime = 'Unknown'; state.currentDate = '01/01/1900'; state.currentTime = 'Unknown';
+    state.turnTime = {years:0, months:0, days:0, hours:0, minutes:0, seconds:0};
+  }
+  state.changed = state.changed || false; state.insertMarker = false;
+
+  let modifiedText = text; let messages = [];
+  function parseBracketCommand(s){ const m=s.trim().match(/^\[(.+?)\]$/); if(!m) return null; const parts=m[1].split(/\s+/); const cmd=parts[0].toLowerCase(); const argStr=m[1].slice(cmd.length).trim(); const pipes=argStr.split("|").map(x=>x.trim()).filter(Boolean); return {cmd,parts,pipes}; }
+  const say = s => messages.push(`[SYSTEM] ${s}`);
+
+  // Sleep
+  if (text.trim().toLowerCase() === '[sleep]') {
+    if (state.currentTime !== 'Unknown' && /\d/.test(state.currentTime)) {
+      let sleepHours = Math.floor(Math.random()*3)+6, sleepMinutes = Math.floor(Math.random()*60);
+      let add={hours:sleepHours,minutes:sleepMinutes}; state.turnTime = addToTurnTime(state.turnTime, add);
+      const {currentDate,currentTime}=computeCurrent(state.startingDate,state.startingTime,state.turnTime); state.currentDate=currentDate; state.currentTime=currentTime;
+      let wakeMessage = (add.days>0 || state.turnTime.days>0) ? "the next day" : "later that day";
+      const ttMarker = formatTurnTime(state.turnTime);
+      say(`You go to sleep and wake up ${wakeMessage} on ${state.currentDate} at ${state.currentTime}. [[${ttMarker}]]. `);
+    } else {
+      state.turnTime = addToTurnTime({years:0,months:0,days:0,hours:0,minutes:0,seconds:0},{days:1}); state.startingTime="8:00 AM";
+      const {currentDate,currentTime}=computeCurrent(state.startingDate,state.startingTime,state.turnTime); state.currentDate=currentDate; state.currentTime=currentTime;
+      const ttMarker = formatTurnTime(state.turnTime); say(`You go to sleep and wake up the next morning on ${state.currentDate} at ${state.currentTime}. [[${ttMarker}]]. `);
+    }
+    state.insertMarker = true; state.changed = true; setSleepCooldown({hours:8}); modifiedText='';
+  } else {
+    // Bracketed commands
+    const parsed = parseBracketCommand(text);
+    if (parsed) {
+      const { cmd, parts, pipes } = parsed;
+
+      // WTG
+      if (cmd === 'settime') {
+        let dateStr=parts[1]; let timeStr=parts.slice(2).join(' ');
+        if (dateStr){ dateStr=dateStr.replace(/[.-]/g,'/'); let [p1,p2,year]=dateStr.split('/').map(Number); if (year<100) year+=2000; let month=p1, day=p2; if(month>12 && day<=12)[month,day]=[day,p1];
+          if (isValidDate(month,day,year)) {
+            state.startingDate=`${String(month).padStart(2,'0')}/${String(day).padStart(2,'0')}/${year}`; if(timeStr) state.startingTime=normalizeTime(timeStr);
+            state.turnTime={years:0,months:0,days:0,hours:0,minutes:0,seconds:0};
+            const {currentDate,currentTime}=computeCurrent(state.startingDate,state.startingTime,state.turnTime); state.currentDate=currentDate; state.currentTime=currentTime;
+            updateAllStoryCardTimestamps(state.currentDate,state.currentTime); clearCommandCooldowns("settime command");
+            const ttMarker=formatTurnTime(state.turnTime); say(`Starting date and time set to ${state.startingDate} ${state.startingTime}. [[${ttMarker}]]. `);
+            state.insertMarker=true; state.changed=true;
+          } else say(`[Invalid date: ${dateStr}. Use mm/dd/yyyy or dd/mm/yyyy.]`);
+        }
+        modifiedText='';
+      } else if (cmd === 'advance') {
+        if (state.startingTime === 'Unknown') { say(`[Time advancement not applied as current time is descriptive (${state.startingTime}). Use [settime] to set a numeric time if needed.]`); }
+        else {
+          const amount=parseInt(parts[1],10); const unit=parts[2]?parts[2].toLowerCase():'hours';
+          let add={}; if(unit.startsWith('y')) add.years=amount; else if(unit.startsWith('m')) add.months=amount; else if(unit.startsWith('d')) add.days=amount; else add.hours=amount;
+          state.turnTime=addToTurnTime(state.turnTime,add); const {currentDate,currentTime}=computeCurrent(state.startingDate,state.startingTime,state.turnTime); state.currentDate=currentDate; state.currentTime=currentTime;
+          const ttMarker=formatTurnTime(state.turnTime); say(`Advanced ${amount} ${unit}. New date/time: ${state.currentDate} ${state.currentTime}. [[${ttMarker}]]. `);
+          state.insertMarker=true; state.changed=true; setAdvanceCooldown({minutes:5});
+        }
+        modifiedText='';
+      } else if (cmd === 'reset') {
+        let newDate=getCurrentDateFromHistory('',true), newTime=getCurrentTimeFromHistory('',true), valid=false;
+        if (newDate){ let [p1,p2,year]=newDate.split('/').map(Number); if(year<100) year+=2000; let month=p1,day=p2; if(month>12 && day<=12)[month,day]=[day,p1];
+          if (isValidDate(month,day,year)) {
+            let tempDate=`${String(month).padStart(2,'0')}/${String(day).padStart(2,'0')}/${year}`; let tempTime=newTime?normalizeTime(newTime):state.startingTime;
+            state.turnTime=getDateDiff(state.startingDate,state.startingTime,tempDate,tempTime); state.currentDate=tempDate; state.currentTime=tempTime;
+            updateAllStoryCardTimestamps(state.currentDate,state.currentTime); clearCommandCooldowns("reset command"); valid=true;
+          }
+        }
+        if(valid){ const ttMarker=formatTurnTime(state.turnTime); say(`Date and time reset to most recent mention: ${state.currentDate} ${state.currentTime}. [[${ttMarker}]]. `); state.insertMarker=true; state.changed=true; }
+        else say(`[No date or time mentions found in history.]`);
+        modifiedText='';
+      }
+
+      // Character commands
+      else if (cmd === 'newchar') {
+        const [name, cls] = [pipes[0], pipes[1]||"Soldier"];
+        if (!name) say(`Usage: [newchar Name | Class]. Classes: ${CharSys.classes.join(", ")}`);
+        else { const c=CharSys.createCharacter(name, cls); say(`Created "${c.name}" as ${c.class}. SAN ${c.sanity.current}/${c.sanity.max}, HP ${c.hp}, WP ${c.wp}.`); }
+        modifiedText='';
+      } else if (cmd === 'setclass') {
+        const [name, cls] = [pipes[0], pipes[1]];
+        if (!name || !cls) say(`Usage: [setclass Name | Class]`);
+        else { const c=CharSys.setClass(name, cls); if(c) say(`Updated ${name} → class ${cls}. SAN max ${c.sanity.max}.`); else say(`Character not found: ${name}`); }
+        modifiedText='';
+      } else if (cmd === 'sanity') {
+        const name=parts[1], delta=parseInt(parts[2]||"+0",10), reason=parts.slice(3).join(' ');
+        if (!name || isNaN(delta)) say(`Usage: [sanity Name +/-N reason]`);
+        else { const res=CharSys.modifySanity(name, delta, reason); if(res) say(`SAN ${name}: ${res.prev} → ${res.current} (${delta>=0?'+':''}${delta})${reason?` — ${reason}`:''}`); else say(`Character not found: ${name}`); }
+        modifiedText='';
+      } else if (cmd === 'bond') {
+        const [name, person, role, strRaw] = [pipes[0], pipes[1], pipes[2]||"Bond", pipes[3]];
+        const strength = strRaw ? parseInt(strRaw,10) : 70;
+        if (!name || !person) say(`Usage: [bond Name | Person | Role | Strength]`);
+        else { const rels=CharSys.addRelationship(name, person, role, strength); if(rels) say(`Bond set: ${name} ↔ ${person} (${role}) = ${strength}`); else say(`Character not found: ${name}`); }
+        modifiedText='';
+      } else if (cmd === 'bondloss') {
+        const [name, person, amtRaw] = [pipes[0], pipes[1], pipes[2]]; const amt = amtRaw ? parseInt(amtRaw,10) : 10;
+        if (!name || !person) say(`Usage: [bondloss Name | Person | Amount]`);
+        else { const r=CharSys.modifyRelationship(name, person, -Math.abs(amt)); if(r) say(`Bond reduced: ${name} ↔ ${person} → ${r.strength} (-${Math.abs(amt)})`); else say(`Character or bond not found: ${name} / ${person}`); }
+        modifiedText='';
+      } else if (cmd === 'showchar') {
+        const name = pipes[0] || parts[1]; const c = name ? CharSys.getCharacter(name) : null;
+        if (!c) say(`Usage: [showchar Name] — or not found: ${name||'(missing)'}`);
+        else say(CharSys.renderCard(c).replace(/\n/g," \\ "));
+        modifiedText='';
+      } else if (cmd === 'resolve') {
+        TimePressure.resolveCheckpoint(); say(`Marked a resolution checkpoint. Threat escalation pauses until another hour elapses.`);
+        modifiedText='';
+      }
+    }
+  }
+
+  if (messages.length>0) modifiedText = messages.join('\n') + '\n' + (modifiedText || '');
+  modifiedText = AutoCards("input", modifiedText);
+  return {text: modifiedText};
+}
+const modifier = (text) => {
+  const res = __IN_PIPELINE__(text); let out = res.text; return {text: out};
+};
+modifier(text);

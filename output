@@ -1,0 +1,165 @@
+// Your "Output" tab should look like this
+// output.js - WTG → SanityFlags → TimePressure → AutoCards → ParagraphFix
+
+function __OUT_PIPELINE__(text) {
+  const __noop = () => {};
+  const ensureLeadingSpaceSafe = (typeof ensureLeadingSpace === 'function') ? ensureLeadingSpace : (s)=> (s && s[0] !== ' ' ? ' ' + s : s);
+  const updateDateTimeCardSafe = (typeof updateDateTimeCard === 'function') ? updateDateTimeCard : __noop;
+  const getWTGSettingsCardSafe = (typeof getWTGSettingsCard === 'function') ? getWTGSettingsCard : __noop;
+  const getCooldownCardSafe = (typeof getCooldownCard === 'function') ? getCooldownCard : __noop;
+  const isValidDateSafe = (typeof isValidDate === 'function') ? isValidDate : (m,d,y)=>{ const dt=new Date(y,m-1,d); return dt.getFullYear()===y && dt.getMonth()===m-1 && dt.getDate()===d; };
+  const normalizeTimeSafe = (typeof normalizeTime === 'function') ? normalizeTime : (t)=> (t||'').toString().trim();
+  const formatTurnTimeSafe = (typeof formatTurnTime === 'function') ? formatTurnTime : (tt)=>{const z=n=>String(Math.max(0,Math.min(99,n|0))).padStart(2,'0');return `${z(tt.years||0)}y${z(tt.months||0)}m${z(tt.days||0)}d${z(tt.hours||0)}h${z(tt.minutes||0)}n${z(tt.seconds||0)}s`;};
+  const addToTurnTimeSafe = (typeof addToTurnTime === 'function') ? addToTurnTime : (tt, add)=>{const r={years:0,months:0,days:0,hours:0,minutes:0,seconds:0,...tt};const a={years:0,months:0,days:0,hours:0,minutes:0,seconds:0,...add};r.years+=a.years;r.months+=a.months;r.days+=a.days;r.hours+=a.hours;r.minutes+=a.minutes;r.seconds+=a.seconds;if(r.seconds>=60){r.minutes+=Math.floor(r.seconds/60);r.seconds%=60;}if(r.minutes>=60){r.hours+=Math.floor(r.minutes/60);r.minutes%=60;}if(r.hours>=24){r.days+=Math.floor(r.hours/24);r.hours%=24;}return r;};
+  const computeCurrentSafe = (typeof computeCurrent === 'function') ? computeCurrent : (sd, st, tt)=>{const base=sd&&sd!=='01/01/1900'?sd:'01/01/1900';const time=st&&st!=='Unknown'?st:'12:00 am';const d=new Date(`${base} ${time}`);if(isNaN(d))return{currentDate:base,currentTime:time};const dd=new Date(d);dd.setFullYear(dd.getFullYear()+(tt.years||0));dd.setMonth(dd.getMonth()+(tt.months||0));dd.setDate(dd.getDate()+(tt.days||0));dd.setHours(dd.getHours()+(tt.hours||0));dd.setMinutes(dd.getMinutes()+(tt.minutes||0));dd.setSeconds(dd.getSeconds()+(tt.seconds||0));const mm=String(dd.getMonth()+1).padStart(2,'0'),day=String(dd.getDate()).padStart(2,'0'),yyyy=dd.getFullYear();let hr=dd.getHours();const ampm=hr>=12?'PM':'AM';hr=hr%12;if(hr===0)hr=12;const min=String(dd.getMinutes()).padStart(2,'0');return{currentDate:`${mm}/${day}/${yyyy}`, currentTime:`${hr}:${min} ${ampm}`};};
+  const parseTurnTimeSafe = (typeof parseTurnTime === 'function') ? parseTurnTime : (s)=>{const m=/^(\d{2})y(\d{2})m(\d{2})d(\d{2})h(\d{2})n(\d{2})s$/.exec(s||"");return m?{years:+m[1],months:+m[2],days:+m[3],hours:+m[4],minutes:+m[5],seconds:+m[6]}:null;};
+  const getWTGBooleanSettingSafe = (typeof getWTGBooleanSetting === 'function') ? getWTGBooleanSetting : ()=> false;
+  const isSleepCooldownActiveSafe = (typeof isSleepCooldownActive === 'function') ? isSleepCooldownActive : ()=> false;
+  const isAdvanceCooldownActiveSafe = (typeof isAdvanceCooldownActive === 'function') ? isAdvanceCooldownActive : ()=> false;
+  const setSleepCooldownSafe = (typeof setSleepCooldown === 'function') ? setSleepCooldown : __noop;
+  const setAdvanceCooldownSafe = (typeof setAdvanceCooldown === 'function') ? setAdvanceCooldown : __noop;
+  const addTimestampToCardSafe = (typeof addTimestampToCard === 'function') ? addTimestampToCard : __noop;
+  const hasTimestampSafe = (typeof hasTimestamp === 'function') ? hasTimestamp : ()=> false;
+  const isCardKeywordMentionedSafe = (typeof isCardKeywordMentioned === 'function') ? isCardKeywordMentioned : ()=> false;
+  const addTurnDataSafe = (typeof addTurnData === 'function') ? addTurnData : __noop;
+
+  state.turnTime = state.turnTime || {years:0, months:0, days:0, hours:0, minutes:0, seconds:0};
+  let modifiedText = text;
+
+  // Boot-time [settime]
+  if (state.startingDate === '01/01/1900' && info.actionCount <= 1) {
+    for (const card of storyCards) {
+      if (!card?.entry) continue;
+      const m = card.entry.match(/\[settime\s+(\d{1,2}[\/\.-]\d{1,2}[\/\.-]\d{2,4})\s+(.+?)\]/i);
+      if (m) {
+        let dateStr=m[1].replace(/[.-]/g,'/'); let timeStr=m[2].trim();
+        let [p1,p2,y]=dateStr.split('/').map(Number); if (y<100) y+=2000;
+        let month=p1, day=p2; if (month>12 && day<=12) [month,day]=[day,p1];
+        if (isValidDateSafe(month,day,y)) {
+          state.startingDate=`${String(month).padStart(2,'0')}/${String(day).padStart(2,'0')}/${y}`;
+          state.startingTime=normalizeTimeSafe(timeStr);
+          state.turnTime={years:0,months:0,days:0,hours:0,minutes:0,seconds:0};
+          const {currentDate,currentTime}=computeCurrentSafe(state.startingDate,state.startingTime,state.turnTime);
+          state.currentDate=currentDate; state.currentTime=currentTime; state.changed = true;
+          updateDateTimeCardSafe(); getWTGSettingsCardSafe(); getCooldownCardSafe();
+          card.entry = card.entry.replace(/\[settime\s+\d{1,2}[\/\.-]\d{1,2}[\/\.-]\d{2,4}\s+.+?\]/i,'').trim();
+          break;
+        }
+      }
+    }
+  }
+
+  if (state.startingDate === '01/01/1900' && state.startingTime === 'Unknown') {
+    return { text: ensureLeadingSpaceSafe('Please switch to story mode and use the command, [settime mm/dd/yyyy time] to set a custom starting date and time. (eg: [settime 01/01/1900 12:00 am])\n\nTo report bugs, message me on discord: thedenial. (it has a period at the end of it). ') };
+  }
+
+  // Find last action
+  let lastAction = null, actionType = "continue";
+  for (let i = history.length - 1; i >= 0; i--) {
+    const a = history[i];
+    if (a.type === "do" || a.type === "say" || a.type === "story") { lastAction = a; actionType = a.type; break; }
+  }
+
+  // AI time commands
+  let timeAdjustedByCommand = false;
+  if (getWTGBooleanSettingSafe("Enable Dynamic Time")) {
+    const commandRegex = /^\s*\((sleep|advance)\s+(\d+)\s+(\w+)\)\s*/;
+    const cmd = modifiedText.match(commandRegex);
+    if (cmd) {
+      const verb=cmd[1], amount=parseInt(cmd[2],10), unit=cmd[3].toLowerCase();
+      let shouldProcess = !((verb==='sleep' && isSleepCooldownActiveSafe()) || (verb==='advance' && isAdvanceCooldownActiveSafe()));
+      if (shouldProcess) {
+        let days=0,hours=0,minutes=0;
+        if (/^y/.test(unit)) days = amount*365; else if (/^mo/.test(unit)||unit==="month"||unit==="months") days=amount*30;
+        else if (/^w/.test(unit)) days=amount*7; else if (/^d/.test(unit)) days=amount; else if (/^h/.test(unit)) hours=amount; else if (/^m/.test(unit)) minutes=amount;
+        if (days||hours||minutes) {
+          state.turnTime = addToTurnTimeSafe(state.turnTime,{days,hours,minutes});
+          const {currentDate,currentTime}=computeCurrentSafe(state.startingDate,state.startingTime,state.turnTime);
+          state.currentDate=currentDate; state.currentTime=currentTime; state.changed = true; timeAdjustedByCommand=true;
+          if (verb==='sleep') setSleepCooldownSafe({hours:8}); if (verb==='advance') setAdvanceCooldownSafe({minutes:5});
+        }
+      }
+      if (!shouldProcess || !getWTGBooleanSettingSafe("Debug Mode")) modifiedText = modifiedText.replace(commandRegex,'').trim();
+    }
+    const scrub = isSleepCooldownActiveSafe() || isAdvanceCooldownActiveSafe() || !getWTGBooleanSettingSafe("Debug Mode");
+    if (scrub) modifiedText = modifiedText.replace(/\((?:sleep|advance)[^)]*\)/gi,'').replace(/\s{2,}/g,' ').trim();
+  }
+
+  // [[TT]] marker
+  const ttMatch = modifiedText.match(/\[\[(.*?)\]\]$/);
+  const parsedTT = ttMatch ? parseTurnTimeSafe(ttMatch[1]) : null;
+  let narrative = ttMatch ? modifiedText.replace(/\[\[.*\]\]$/, '').trim() : modifiedText.trim();
+  let charCount = narrative.length;
+
+  // Dynamic minutes
+  let minutesToAdd = getWTGBooleanSettingSafe("Enable Dynamic Time")
+    ? Math.floor((charCount/700) * ((typeof getDynamicTimeFactor==='function')? getDynamicTimeFactor(((lastAction?.text)||'')+' '+narrative) : 1.0))
+    : Math.floor(charCount/700);
+
+  if (parsedTT) {
+    const currentTTForm = formatTurnTimeSafe(state.turnTime);
+    if (ttMatch[1] !== currentTTForm) narrative += '\n[Warning: Turn time metadata altered by AI. Please retry.]';
+  }
+
+  if (!timeAdjustedByCommand && state.startingTime !== 'Unknown' && minutesToAdd > 0) {
+    state.turnTime = addToTurnTimeSafe(state.turnTime, {minutes: minutesToAdd});
+    const {currentDate,currentTime}=computeCurrentSafe(state.startingDate,state.startingTime,state.turnTime);
+    state.currentDate=currentDate; state.currentTime=currentTime; state.changed = true;
+  }
+
+  // Sanity Flags + Time Pressure (safe guards; keep text unchanged)
+  try {
+    if (typeof SanityFlags !== 'undefined' && SanityFlags && typeof SanityFlags.process === 'function') {
+      SanityFlags.process(narrative);
+    }
+  } catch {}
+  try {
+    if (typeof TimePressure !== 'undefined' && TimePressure && typeof TimePressure.tick === 'function') {
+      TimePressure.tick();
+    }
+  } catch {}
+
+  modifiedText = narrative;
+
+  // Timestamp cards
+  if (lastAction && state.currentDate !== '01/01/1900' && state.currentTime !== 'Unknown') {
+    const dtCard = storyCards.find(card => card.title === "Current Date and Time");
+    if (dtCard) addTimestampToCardSafe(dtCard, `${state.currentDate} ${state.currentTime}`);
+    const combined = (lastAction ? lastAction.text : '') + ' ' + modifiedText;
+    for (const card of storyCards) {
+      if (["WTG Data","Current Date and Time","World Time Generator Settings"].includes(card.title)) continue;
+      if (card.entry && !hasTimestampSafe(card) && isCardKeywordMentionedSafe(card, combined)) {
+        addTimestampToCardSafe(card, `${state.currentDate} ${state.currentTime}`);
+      }
+    }
+  }
+
+  // Log turn
+  if (lastAction && actionType !== "continue") {
+    const timestamp = formatTurnTimeSafe(state.turnTime);
+    addTurnDataSafe(actionType, lastAction.text, modifiedText, timestamp);
+  }
+
+  // Periodic update
+  if (state.changed || info.actionCount === 1 || info.actionCount % 5 === 0) { updateDateTimeCardSafe(); delete state.changed; }
+
+  // DGCM sync (safe)
+  try {
+    if (state.__DGCMEnabled !== false && typeof DGCM !== 'undefined' && DGCM && typeof DGCM.syncFromChars === 'function') {
+      DGCM.syncFromChars();
+    }
+  } catch {}
+
+  delete state.insertMarker;
+  return { text: modifiedText };
+}
+
+const modifier = (text) => {
+  let { text: out } = __OUT_PIPELINE__(text);
+  const AutoCardsSafe = (typeof AutoCards === 'function') ? AutoCards : (_hook, t) => t;
+  const ParagraphFixSafe = (typeof ParagraphFix === 'function') ? ParagraphFix : (_hook, t) => t;
+  out = AutoCardsSafe("output", out);
+  out = ParagraphFixSafe("output", out);
+  return {text: out};
+};
+modifier(text);

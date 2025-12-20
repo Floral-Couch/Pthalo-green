@@ -1,0 +1,369 @@
+function ParagraphFix(hook, inputText) {
+  "use strict";
+  const DEFAULT_FORMATTING_TYPE = "none";
+  const DEFAULT_INDENT_PARAGRAPHS = false;
+
+  const PF = (function() {
+    if (typeof state !== "undefined" && state.ParagraphFix) {
+      const pf = state.ParagraphFix; delete state.ParagraphFix; return pf;
+    }
+    return { formattingType: DEFAULT_FORMATTING_TYPE, indentParagraphs: DEFAULT_INDENT_PARAGRAPHS };
+  })();
+
+  function readPastAction(lookBack = 0) {
+    if (!Array.isArray(history) || history.length === 0) return { text: "", type: "unknown" };
+    const index = Math.max(0, history.length - 1 - Math.abs(lookBack));
+    const action = history[index] || {};
+    return { text: action.text || action.rawText || "", type: action.type || "unknown" };
+  }
+
+  function adjustNewlines(text) {
+    if (PF.formattingType === "none") return text;
+    const previousAction = readPastAction(0);
+    if (["do", "say", "see"].includes(previousAction.type)) return text;
+    const prevText = previousAction.text || "";
+    const endNewlines = Math.min(2, (prevText.match(/\n*$/)?.[0] || "").length);
+    const startNewlines = Math.min(2, (text.match(/^\n*/)?.[0] || "").length);
+    const totalNewlines = endNewlines + startNewlines;
+    if (totalNewlines < 2 && totalNewlines === 1) return "\n" + text;
+    return text;
+  }
+
+  function getConfigCardTemplate() {
+    return {
+      type: "class",
+      title: "Configure Paragraph Fix",
+      keys: "Edit the entry above to configure the Paragraph Fix",
+      entry:
+        "> The Paragraph Fix ensures consistent spacing in your adventure. You may configure the following settings by replacing the current values with your desired options.\n" +
+        "> Formatting Type: " + PF.formattingType + "\n" +
+        "> Indent Paragraphs: " + PF.indentParagraphs + "\n\n" +
+        "> Available formatting types:\n" +
+        "> - none: No formatting applied\n" +
+        "> - basic: Basic formatting (converts multiple spaces/newlines to double newlines)\n" +
+        "> - empty-line: Empty line dialogue formatting (adds spacing before quotes except after commas)\n" +
+        "> - newline: Newline dialogue formatting (basic + newlines before quotes)\n\n" +
+        "> Indent Paragraphs adds 4-space indents to new paragraphs",
+      description:
+        "The Paragraph Fix automatically applies consistent spacing and dialogue formatting to your story output. Set formatting type to 'none' to disable all formatting, and set indent paragraphs to 'true' or 'false' to control paragraph indentation."
+    };
+  }
+
+  function extractSettings(text) {
+    const settings = {};
+    const lines = (text || "").toLowerCase().replace(/[^a-z0-9:\->]+/g, "").split(">");
+    for (const line of lines) {
+      const parts = line.split(":"); if (parts.length !== 2) continue;
+      const key = parts[0].trim(); const value = parts[1].trim();
+      if (key.includes("formatting") && key.includes("type")) {
+        const valid = ["none", "basic", "empty-line", "emptyline", "newline"];
+        if (valid.includes(value)) settings.formattingType = value.replace("emptyline", "empty-line");
+      }
+      if (key.includes("indent") && key.includes("paragraphs")) {
+        const tv = ["true","t","yes","y","on"], fv = ["false","f","no","n","off"];
+        if (tv.includes(value)) settings.indentParagraphs = true;
+        else if (fv.includes(value)) settings.indentParagraphs = false;
+      }
+    }
+    return settings;
+  }
+
+  function findConfigCard() {
+    const template = getConfigCardTemplate();
+    for (const card of storyCards) {
+      if (card.title === template.title) return card;
+      if (card.keys === template.keys) return card;
+      if (card.keys && card.keys.includes("Configure Paragraph Fix")) return card;
+      if (card.title && card.title.includes("Configure Paragraph Fix")) return card;
+    }
+    return null;
+  }
+
+  function createOrRepairCard() {
+    let configCard = findConfigCard();
+    const template = getConfigCardTemplate();
+    if (!configCard) {
+      addStoryCard(template.keys);
+      for (let i = storyCards.length - 1; i >= 0; i--) {
+        const card = storyCards[i];
+        if (card.keys === template.keys) {
+          card.type = template.type; card.title = template.title;
+          card.entry = template.entry; card.description = template.description;
+          return card;
+        }
+      }
+    } else {
+      const userSettings = extractSettings(configCard.entry);
+      if (userSettings.formattingType) PF.formattingType = userSettings.formattingType;
+      if (typeof userSettings.indentParagraphs === "boolean") PF.indentParagraphs = userSettings.indentParagraphs;
+      const updatedTemplate = getConfigCardTemplate();
+      configCard.title = updatedTemplate.title;
+      configCard.keys = updatedTemplate.keys;
+      configCard.entry = updatedTemplate.entry;
+      configCard.description = updatedTemplate.description;
+      return configCard;
+    }
+    return null;
+  }
+
+  function applyFormatting(text, type) {
+    switch (type) {
+      case "basic": return text.replace(/\s{2,}|\n/g, '\n\n');
+      case "empty-line": return text.replace(/(?<!,) (?=")|\s{2,}|\n/g, '\n\n');
+      case "newline": return text.replace(/\s{2,}|\n/g, '\n\n').replace(/(?<!,) (?=")/g, '\n');
+      default: return text;
+    }
+  }
+
+  function applyIndentation(text) {
+    if (!PF.indentParagraphs) return text;
+    const previousAction = readPastAction(0);
+    const isAfterDoSay = ["do", "say", "see"].includes(previousAction.type);
+    if (isAfterDoSay) {
+      const lines = text.split('\n');
+      return lines.map(line => {
+        const trimmed = line.trimStart();
+        if (trimmed.startsWith(">") || trimmed === "" || line.startsWith("    ")) return line;
+        return "    " + line;
+      }).join('\n');
+    } else {
+      return text.replace(/\n\n(\s*)(?=\S)(?!>)/g, () => '\n\n    ');
+    }
+  }
+
+  switch (hook) {
+    case "context": {
+      let contextResult = inputText.replace(/^    /gm, "");
+      createOrRepairCard();
+      state.ParagraphFix = PF;
+      return contextResult;
+    }
+    case "output": {
+      if (!PF.formattingType || PF.formattingType === "none") { state.ParagraphFix = PF; return inputText; }
+      let result = inputText; result = applyFormatting(result, PF.formattingType);
+      result = adjustNewlines(result); result = applyIndentation(result);
+      state.ParagraphFix = PF; return result;
+    }
+    default: state.ParagraphFix = PF; return inputText;
+  }
+}
+
+/* ---------- Core Shims + Character System + Sanity Flags + Time Pressure + DGCM ---------- */
+(function initSystems(){
+  // Core shims
+  if (typeof globalThis.state === "undefined") globalThis.state = {};
+  if (typeof globalThis.storyCards === "undefined") globalThis.storyCards = [];
+  if (typeof globalThis.history === "undefined") globalThis.history = [];
+  if (typeof globalThis.info === "undefined") globalThis.info = { actionCount: 0 };
+  if (typeof globalThis.AutoCards === "undefined") globalThis.AutoCards = (hook, text, stop) => hook==="context" ? [text, !!stop] : text;
+  if (typeof globalThis.ensureLeadingSpace === "undefined") globalThis.ensureLeadingSpace = s => (s && s[0] !== " " ? " " + s : s);
+  if (typeof globalThis.isValidDate === "undefined") globalThis.isValidDate = (m,d,y)=>{ const dt=new Date(y,m-1,d); return dt.getFullYear()===y && dt.getMonth()===m-1 && dt.getDate()===d; };
+  if (typeof globalThis.normalizeTime === "undefined") globalThis.normalizeTime = t => (t||"").toString().trim();
+  if (typeof globalThis.formatTurnTime === "undefined") globalThis.formatTurnTime = (tt)=>{const z=n=>String(Math.max(0,Math.min(99,n|0))).padStart(2,'0');return `${z(tt.years||0)}y${z(tt.months||0)}m${z(tt.days||0)}d${z(tt.hours||0)}h${z(tt.minutes||0)}n${z(tt.seconds||0)}s`;};
+  if (typeof globalThis.addToTurnTime === "undefined") globalThis.addToTurnTime = (tt, add)=>{const r={years:0,months:0,days:0,hours:0,minutes:0,seconds:0,...tt};const a={years:0,months:0,days:0,hours:0,minutes:0,seconds:0,...add};r.years+=a.years;r.months+=a.months;r.days+=a.days;r.hours+=a.hours;r.minutes+=a.minutes;r.seconds+=a.seconds;if(r.seconds>=60){r.minutes+=Math.floor(r.seconds/60);r.seconds%=60;}if(r.minutes>=60){r.hours+=Math.floor(r.minutes/60);r.minutes%=60;}if(r.hours>=24){r.days+=Math.floor(r.hours/24);r.hours%=24;}return r;};
+  if (typeof globalThis.computeCurrent === "undefined") globalThis.computeCurrent = (sd, st, tt)=>{const base=sd&&sd!=='01/01/1900'?sd:'01/01/1900';const time=st&&st!=='Unknown'?st:'12:00 am';const d=new Date(`${base} ${time}`);if(isNaN(d))return{currentDate:base,currentTime:time};const dd=new Date(d);dd.setFullYear(dd.getFullYear()+(tt.years||0));dd.setMonth(dd.getMonth()+(tt.months||0));dd.setDate(dd.getDate()+(tt.days||0));dd.setHours(dd.getHours()+(tt.hours||0));dd.setMinutes(dd.getMinutes()+(tt.minutes||0));dd.setSeconds(dd.getSeconds()+(tt.seconds||0));const mm=String(dd.getMonth()+1).padStart(2,'0'),day=String(dd.getDate()).padStart(2,'0'),yyyy=dd.getFullYear();let hr=dd.getHours();const ampm=hr>=12?'PM':'AM';hr=hr%12; if(hr===0) hr=12; const min=String(dd.getMinutes()).padStart(2,'0');return{currentDate:`${mm}/${day}/${yyyy}`, currentTime:`${hr}:${min} ${ampm}`};};
+  if (typeof globalThis.parseTurnTime === "undefined") globalThis.parseTurnTime = s=>{const m=/^(\d{2})y(\d{2})m(\d{2})d(\d{2})h(\d{2})n(\d{2})s$/.exec(s||"");return m?{years:+m[1],months:+m[2],days:+m[3],hours:+m[4],minutes:+m[5],seconds:+m[6]}:null;};
+  if (typeof globalThis.getDateDiff === "undefined") globalThis.getDateDiff = (sd,st,cd,ct)=>{const a=new Date(`${sd} ${st}`), b=new Date(`${cd} ${ct}`); if(isNaN(a)||isNaN(b)) return {years:0,months:0,days:0,hours:0,minutes:0,seconds:0}; let ms=Math.max(0,b-a); const days=Math.floor(ms/86400000); ms-=days*86400000; const hours=Math.floor(ms/3600000); ms-=hours*3600000; const minutes=Math.floor(ms/60000); ms-=minutes*60000; const seconds=Math.floor(ms/1000); return {years:0,months:0,days,hours,minutes,seconds};};
+  if (typeof globalThis.getTurnData === "undefined") globalThis.getTurnData = ()=> state.__WTGData || (state.__WTGData = []);
+  if (typeof globalThis.addTurnData === "undefined") globalThis.addTurnData = (type, actionText, responseText, ttString)=>{ const arr=getTurnData(); arr.push({type, actionText, responseText, timestamp: ttString, responseTime: Date.now()}); };
+  if (typeof globalThis.cleanupWTGDataCardByTimestamp === "undefined") globalThis.cleanupWTGDataCardByTimestamp = ()=>{};
+  if (typeof globalThis.cleanupStoryCardsByTimestamp === "undefined") globalThis.cleanupStoryCardsByTimestamp = ()=>{};
+  if (typeof globalThis.updateAllStoryCardTimestamps === "undefined") globalThis.updateAllStoryCardTimestamps = ()=>{};
+  if (typeof globalThis.addTimestampToCard === "undefined") globalThis.addTimestampToCard = (card, ts)=>{ if(card) card.entry=(card.entry||"") + `\n\n[timestamp ${ts}]`; };
+  if (typeof globalThis.hasTimestamp === "undefined") globalThis.hasTimestamp = card=> /\[timestamp\s+\d{2}\/\d{2}\/\d{4}\s+.+?\]/i.test(card?.entry||"");
+  if (typeof globalThis.isCardKeywordMentioned === "undefined") globalThis.isCardKeywordMentioned = (card, text)=>{ const k=(card?.keys||"").toLowerCase().split(/\s*,\s*|\s+/).filter(Boolean); const t=(text||"").toLowerCase(); return k.some(w=>w.length>2 && t.includes(w)); };
+  if (typeof globalThis.getWTGBooleanSetting === "undefined") globalThis.getWTGBooleanSetting = name=> !!(state.__WTGSettings && state.__WTGSettings[name]);
+  if (typeof globalThis.getWTGSettingsCard === "undefined") globalThis.getWTGSettingsCard = ()=> ({});
+  if (typeof globalThis.getCooldownCard === "undefined") globalThis.getCooldownCard = ()=> ({});
+  if (typeof globalThis.setSleepCooldown === "undefined") globalThis.setSleepCooldown = ({hours=8}={})=>{ state.cooldowns = state.cooldowns || {}; state.cooldowns.sleepUntil = Date.now() + hours*3600000; };
+  if (typeof globalThis.isSleepCooldownActive === "undefined") globalThis.isSleepCooldownActive = ()=> !!(state.cooldowns && state.cooldowns.sleepUntil && Date.now() < state.cooldowns.sleepUntil);
+  if (typeof globalThis.setAdvanceCooldown === "undefined") globalThis.setAdvanceCooldown = ({minutes=5}={})=>{ state.cooldowns = state.cooldowns || {}; state.cooldowns.advanceUntil = Date.now() + minutes*60000; };
+  if (typeof globalThis.isAdvanceCooldownActive === "undefined") globalThis.isAdvanceCooldownActive = ()=> !!(state.cooldowns && state.cooldowns.advanceUntil && Date.now() < state.cooldowns.advanceUntil);
+  if (typeof globalThis.clearCommandCooldowns === "undefined") globalThis.clearCommandCooldowns = ()=>{ if (state.cooldowns) state.cooldowns = {}; };
+  if (typeof globalThis.extractKeywords === "undefined") globalThis.extractKeywords = s=> (s||"").toLowerCase().match(/[a-z0-9]+/g)||[];
+  if (typeof globalThis.calculateKeywordSimilarity === "undefined") globalThis.calculateKeywordSimilarity = (a,b)=>{ const A=new Set(a||[]), B=new Set(b||[]); const inter=[...A].filter(x=>B.has(x)).length; const uni=new Set([...A,...B]).size||1; return inter/uni; };
+  if (typeof globalThis.getDynamicTimeFactor === "undefined") globalThis.getDynamicTimeFactor = ()=> 1.0;
+  if (typeof globalThis.getCurrentDateFromHistory === "undefined") globalThis.getCurrentDateFromHistory = ()=> null;
+  if (typeof globalThis.getCurrentTimeFromHistory === "undefined") globalThis.getCurrentTimeFromHistory = ()=> null;
+  if (typeof globalThis.getLastTurnTimeAndChars === "undefined") globalThis.getLastTurnTimeAndChars = (hist)=>{ const last=(hist||[]).slice(-1)[0] || { text:"" }; return { lastTT: state.turnTime || {years:0,months:0,days:0,hours:0,minutes:0,seconds:0}, charsAfter: (last.text||"").length }; };
+  if (typeof globalThis.addStoryCard === "undefined") globalThis.addStoryCard = (keys)=>{ storyCards.push({ type:"class", title:"New Card", keys:keys||"", entry:"", description:"" }); };
+  if (typeof globalThis.updateDateTimeCard === "undefined") globalThis.updateDateTimeCard = function updateDateTimeCard(){ try{ const title="Current Date and Time"; let card=storyCards.find(c=>c && c.title===title); if(!card){ card={type:"class",title,keys:"",entry:"",description:"Keeps the current in-world date/time."}; storyCards.push(card);} const date=state.currentDate||'01/01/1900', time=state.currentTime||'Unknown'; if (date!=='01/01/1900' && time!=='Unknown') addTimestampToCard(card, `${date} ${time}`);}catch{} };
+
+  // Character System
+  const CLAMP = (n,min,max)=>Math.max(min,Math.min(max,n));
+  const RND = (seed)=>{ let s=0; for(let i=0;i<seed.length;i++) s=(s*31+seed.charCodeAt(i))>>>0; return ()=> (s=(1103515245*s+12345)>>>0)/0xFFFFFFFF; };
+  const CHAR_CLASSES = {
+    Soldier:{ base:{STR:60,DEX:55,CON:60,INT:50,POW:50}, sanMax:60, skills:["Firearms","Athletics","Tactics"], bonds:[["Service Buddy","Comrade",75]] },
+    Analyst:{ base:{STR:45,DEX:50,CON:50,INT:70,POW:55}, sanMax:55, skills:["Research","Bureaucracy","Human"], bonds:[["Mentor","Supervisor",70]] },
+    Medic:{ base:{STR:50,DEX:55,CON:55,INT:60,POW:60}, sanMax:65, skills:["First Aid","Medicine","Reassure"], bonds:[["Clinic Contact","Colleague",70]] },
+    Occultist:{ base:{STR:45,DEX:50,CON:45,INT:65,POW:70}, sanMax:50, skills:["Occult","Languages","Insight"], bonds:[["Cabal Contact","Confidant",60]] },
+    Handler:{ base:{STR:50,DEX:50,CON:55,INT:65,POW:60}, sanMax:60, skills:["Leadership","Logistics","Tradecraft"], bonds:[["Case Officer","Agency",70]] }
+  };
+  function ensureCard(title, desc=""){ let c=storyCards.find(x=>x && x.title===title); if(!c){ c={type:"class",title,keys:"",entry:"",description:desc}; storyCards.push(c);} return c; }
+  function syncRosterCard(chars) {
+    const card = ensureCard("Character Roster","Index of all active characters.");
+    const list = Object.values(chars).sort((a,b)=>a.name.localeCompare(b.name))
+      .map(c=>`- ${c.name} — ${c.class} | SAN ${c.sanity.current}/${c.sanity.max}${c.relationships.length?` | Top Bond: ${c.relationships[0].name} (${c.relationships[0].strength})`:""}`).join("\n");
+    card.keys="characters, roster, pcs, agents"; card.entry=`# Character Roster\n${list||"_(empty)_"}`; return card;
+  }
+  function renderCharacterCard(c){
+    const relLines=c.relationships.map(r=>`  - ${r.name} (${r.role}) — ${r.strength}`).join("\n");
+    const stats=`STR ${c.stats.STR}, DEX ${c.stats.DEX}, CON ${c.stats.CON}, INT ${c.stats.INT}, POW ${c.stats.POW}`;
+    return `# ${c.name}\nClass: ${c.class}\nSAN: ${c.sanity.current}/${c.sanity.max}\nHP: ${c.hp} | WP: ${c.wp}\nStats: ${stats}\nSkills: ${c.skills.join(", ")}\nRelationships:\n${relLines||"  - (none)"}\nNotes: ${c.notes||"-"}`;
+  }
+  function derive(c){ c.hp=Math.round((c.stats.CON+c.stats.STR)/10); c.wp=c.stats.POW; }
+  function rollStatsFromBase(name, base){ const rnd=RND(name), out={}; for(const k of ["STR","DEX","CON","INT","POW"]){ const jitter=Math.round((rnd()-0.5)*10); out[k]=CLAMP(base[k]+jitter,30,80);} return out; }
+  function ensureChars(){ if(!state.__Chars) state.__Chars={}; return state.__Chars; }
+  function getCharacter(name){ return ensureChars()[name]||null; }
+  function createCharacter(name, cls="Soldier", overrides={}) {
+    const chars=ensureChars(); const clsDef=CHAR_CLASSES[cls]||CHAR_CLASSES.Soldier;
+    const stats=rollStatsFromBase(name, clsDef.base);
+    const c={ id:`CHAR_${Date.now().toString(36)}_${Math.random().toString(36).slice(2,6)}`, name, class:cls,
+      stats, sanity:{current:clsDef.sanMax, max:clsDef.sanMax, breaks:[]}, skills:[...clsDef.skills],
+      relationships:(clsDef.bonds||[]).map(([n,r,s])=>({name:n,role:r,strength:s||70})), notes:"" };
+    if (overrides.stats) Object.assign(c.stats, overrides.stats);
+    if (overrides.sanity) Object.assign(c.sanity, overrides.sanity);
+    if (overrides.skills) c.skills = overrides.skills.slice();
+    if (overrides.relationships) c.relationships = overrides.relationships.slice();
+    derive(c); chars[name]=c;
+    const card=ensureCard(`Character: ${name}`,"Character sheet."); card.keys=`character, ${name.toLowerCase()}, ${cls.toLowerCase()}`; card.entry=renderCharacterCard(c);
+    syncRosterCard(chars); return c;
+  }
+  function setClass(name, cls){ const c=getCharacter(name); if(!c) return null; const clsDef=CHAR_CLASSES[cls]||CHAR_CLASSES.Soldier;
+    c.class=cls; c.stats=rollStatsFromBase(name, clsDef.base); c.sanity.max=clsDef.sanMax; c.sanity.current=Math.min(c.sanity.current,c.sanity.max); c.skills=[...clsDef.skills]; derive(c);
+    ensureCard(`Character: ${name}`).entry=renderCharacterCard(c); syncRosterCard(ensureChars()); return c; }
+  function modifySanity(name, delta, reason=""){ const c=getCharacter(name); if(!c) return null; const prev=c.sanity.current;
+    c.sanity.current=CLAMP(c.sanity.current+delta,0,c.sanity.max); if (c.sanity.current<=Math.floor(c.sanity.max*0.25)) c.sanity.breaks.push({at:c.sanity.current,ts:Date.now(),reason});
+    ensureCard(`Character: ${name}`).entry=renderCharacterCard(c); return {prev,current:c.sanity.current}; }
+  function addRelationship(name, person, role="Bond", strength=70){ const c=getCharacter(name); if(!c) return null;
+    const ex=c.relationships.find(r=>r.name.toLowerCase()===person.toLowerCase()); if(ex) ex.strength=CLAMP(strength,0,100);
+    else c.relationships.push({name:person,role,strength:CLAMP(strength,0,100)}); c.relationships.sort((a,b)=>b.strength-a.strength);
+    ensureCard(`Character: ${name}`).entry=renderCharacterCard(c); syncRosterCard(ensureChars()); return c.relationships; }
+  function modifyRelationship(name, person, delta){ const c=getCharacter(name); if(!c) return null; const r=c.relationships.find(x=>x.name.toLowerCase()===person.toLowerCase()); if(!r) return null;
+    r.strength=CLAMP(r.strength+delta,0,100); c.relationships.sort((a,b)=>b.strength-a.strength); ensureCard(`Character: ${name}`).entry=renderCharacterCard(c); syncRosterCard(ensureChars()); return r; }
+
+  globalThis.CharSys = { classes:Object.keys(CHAR_CLASSES), getCharacter, createCharacter, setClass, modifySanity, addRelationship, modifyRelationship, renderCard:renderCharacterCard, syncRosterCard };
+
+  // SANITY FLAGS
+  const SanityFlags = (function(){
+    const defaults = {
+      delta: { impossible:-1, dangerousText:-2, harmInnocent:-4 },
+      keywords: {
+        impossible: ["non-euclidean","impossible angle","escher","eldritch geometry","contradiction of physics","space bends","time loops"],
+        dangerousText: ["forbidden tome","necronomicon","blasphemous sigil","mind-rending verse","occult grimoire","dangerous text","unspeakable name"],
+        harmInnocent: ["shoots a civilian","harms a child","hurts an innocent","collateral civilian","hostage injured","panicked crowd trampled"]
+      },
+      cues: {
+        impossible: { detachment:true, shortAnswers:true },
+        dangerousText: { meticulous:true, paranoid:true },
+        harmInnocent: { remorse:true, hesitation:true }
+      }
+    };
+    function ensureState(){ state.__Sanity = state.__Sanity || { log:[], cues:{}, lastTrigger:{} }; return state.__Sanity; }
+    function matchAny(text, list){ const t=text.toLowerCase(); return list.some(k=>t.includes(k)); }
+    function applyDeltaAll(delta, reason){
+      const chars = state.__Chars || {};
+      Object.values(chars).forEach(c=> { CharSys.modifySanity(c.name, delta, reason); });
+    }
+    function logCard(reason, delta){
+      const card=ensureCard("Sanity Events","Log of sanity-triggering events.");
+      const when = `${state.currentDate||'??' } ${state.currentTime||''}`.trim();
+      card.entry = (card.entry||"") + `\n- ${when}: ${reason} (SAN ${delta})`;
+    }
+    function process(text){
+      const S=ensureState(); const t=(text||"").toLowerCase();
+      let triggered = [];
+      if (matchAny(t, defaults.keywords.impossible)) {
+        triggered.push("impossible"); Object.assign(S.cues, defaults.cues.impossible); applyDeltaAll(defaults.delta.impossible,"Observed impossible phenomena"); logCard("Impossible phenomena", defaults.delta.impossible);
+      }
+      if (matchAny(t, defaults.keywords.dangerousText)) {
+        triggered.push("dangerousText"); Object.assign(S.cues, defaults.cues.dangerousText); applyDeltaAll(defaults.delta.dangerousText,"Read dangerous text"); logCard("Dangerous text", defaults.delta.dangerousText);
+      }
+      if (matchAny(t, defaults.keywords.harmInnocent)) {
+        triggered.push("harmInnocent"); Object.assign(S.cues, defaults.cues.harmInnocent); applyDeltaAll(defaults.delta.harmInnocent,"Harmed innocents"); logCard("Harming innocents", defaults.delta.harmInnocent);
+      }
+      if (triggered.length>0) { S.lastTrigger = { kinds: triggered, ts: Date.now() }; }
+      return triggered;
+    }
+    return { process };
+  })();
+  globalThis.SanityFlags = SanityFlags;
+
+  // TIME PRESSURE
+  const TimePressure = (function(){
+    function ensure(){ state.__TimePressure = state.__TimePressure || { lastEscMinutes:0, count:0, lastResolvedMinutes:0, level:0 }; return state.__TimePressure; }
+    function totalMinutes(tt){ return (tt.years||0)*525600 + (tt.months||0)*43200 + (tt.days||0)*1440 + (tt.hours||0)*60 + (tt.minutes||0); }
+    function tick(){
+      const TP=ensure(); const nowMin = totalMinutes(state.turnTime||{});
+      const base = Math.max(TP.lastEscMinutes, TP.lastResolvedMinutes);
+      const steps = Math.floor((nowMin - base)/60);
+      if (steps>0) {
+        TP.lastEscMinutes = nowMin;
+        TP.count += steps; TP.level = TP.count;
+        const card=ensureCard("Threat Escalation","Each in-game hour without resolution increases threat/civilian exposure.");
+        const when = `${state.currentDate||'??'} ${state.currentTime||''}`.trim();
+        for (let i=0;i<steps;i++) card.entry = (card.entry||"") + `\n- ${when}: Escalation +1 (Level ${TP.level - (steps-1-i) + 0})`;
+      }
+      return steps;
+    }
+    function resolveCheckpoint(){
+      const TP=ensure(); const nowMin = (state.turnTime)? ( (state.turnTime.years||0)*525600 + (state.turnTime.months||0)*43200 + (state.turnTime.days||0)*1440 + (state.turnTime.hours||0)*60 + (state.turnTime.minutes||0) ) : 0;
+      TP.lastResolvedMinutes = nowMin;
+      const card=ensureCard("Threat Escalation","Each in-game hour without resolution increases threat/civilian exposure.");
+      const when = `${state.currentDate||'??'} ${state.currentTime||''}`.trim();
+      card.entry = (card.entry||"") + `\n- ${when}: Resolution checkpoint set`;
+    }
+    return { tick, resolveCheckpoint };
+  })();
+  globalThis.TimePressure = TimePressure;
+
+  // DeltaGreenContextManager (feature-flagged)
+  class DeltaGreenContextManager {
+    constructor(config = {}) {
+      this.campaignId = config.campaignId || `DG-${Date.now()}`;
+      this.gamemaster = config.gamemaster || 'Anonymous Handler';
+      this.timestamp = new Date().toISOString();
+      this.agents = new Map(); this.teams=new Map(); this.missions=new Map(); this.threats=new Map();
+      this.narrative={scenes:[], atmosphere:[], clues:[], revelations:[]};
+      this.worldState = config.worldState || {}; this.sanityTracker=new Map(); this.missionLog=[]; this.contextHistory=[];
+    }
+    registerAgent(agent){
+      const a={ id:agent.id||`AGENT-${this.agents.size+1}`, name:agent.name||'Unknown', role:agent.role||'Operative',
+        callsign:agent.callsign||('Agent-'+(this.agents.size+1)), sanity:agent.sanity||60, maxSanity:agent.maxSanity||60,
+        skills:agent.skills||{}, status:agent.status||'active', connections:agent.connections||[], joinedCampaign:new Date().toISOString() };
+      this.agents.set(a.id,a); this.sanityTracker.set(a.id,{current:a.sanity,max:a.maxSanity,history:[],breakpoints:[]}); return a;
+    }
+    getAllAgents(){ return Array.from(this.agents.values()); }
+    getAllTeams(){ return Array.from(this.teams.values()); }
+    getActiveThreats(){ const out=[]; this.threats.forEach(t=>{ if(t.status==='active') out.push(t); }); return out.sort((a,b)=>b.threatLevel-a.threatLevel); }
+    getNarrativeState(){ return { scenes:this.narrative.scenes.length, atmosphere:this.narrative.atmosphere.length, clues:this.narrative.clues.length, revelations:this.narrative.revelations.length }; }
+    getCurrentMission(){ let cm=null; this.missions.forEach(m=>{ if(m.status==='active') cm=m; }); return cm; }
+    calculateAverageSanity(){ if(this.agents.size===0) return 0; const total=Array.from(this.agents.values()).reduce((s,a)=>s+a.sanity,0); return Math.round(total/this.agents.size); }
+    calculateThreatLevel(){ const th=this.getActiveThreats(); if(th.length===0) return 0; const avg=th.reduce((s,t)=>s+t.threatLevel,0)/th.length; return Math.round(avg); }
+    calculateCampaignDuration(){ const start=new Date(this.timestamp), now=new Date(); const days=Math.floor((now-start)/86400000); return `${days} days`; }
+    getCampaignSummary(){ return { total_agents:this.agents.size, avg_sanity:this.calculateAverageSanity(), mission:this.getCurrentMission()?.title||'None', threat:this.calculateThreatLevel() }; }
+  }
+  globalThis.DeltaGreenContextManager = DeltaGreenContextManager;
+
+  if (typeof globalThis.DGCM === "undefined") {
+    globalThis.DGCM = {
+      enable: ()=>{ state.__DGCMEnabled = true; },
+      disable: ()=>{ state.__DGCMEnabled = false; },
+      ensure: ()=>{
+        if (state.__DGCMEnabled === undefined) state.__DGCMEnabled = true;
+        if (!state.__DGCM && state.__DGCMEnabled) state.__DGCM = new DeltaGreenContextManager({ gamemaster: 'Handler', worldState: {} });
+        return state.__DGCM || null;
+      },
+      syncFromChars: ()=>{
+        const mgr = DGCM.ensure(); if (!mgr) return;
+        const chars = state.__Chars || {};
+        // naive one-way sync (name as id)
+        Object.values(chars).forEach(c=>{
+          const existing = Array.from(mgr.agents.values()).find(a=>a.name===c.name);
+          if (!existing) mgr.registerAgent({ id:c.id, name:c.name, role:c.class, sanity:c.sanity.current, maxSanity:c.sanity.max, skills:c.skills.reduce((o,k)=>(o[k]=true,o),{}), status:'active' });
+          else { existing.sanity = c.sanity.current; existing.maxSanity = c.sanity.max; }
+        });
+      }
+    };
+  }
+})();

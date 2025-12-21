@@ -1,0 +1,1138 @@
+[
+  /* ============================
+     FACTIONS
+     ============================ */
+
+  {
+    "keys": "Delta Green, P4 Division, OSS-DG, conspiracy, Program, Outlaws",
+    "value": "A century-old clearance originating from the P4 Division’s 1917 investigations. It evolved into OSS-DG, then fractured during the Cold War, the Majestic conflict, and the 2002 Schism. Delta Green persists in two forms: the Program, a sanctioned containment arm, and the Outlaws, a rogue network of veterans rejecting oversight.",
+    "type": "faction",
+    "title": "Delta Green",
+    "description": "Fragmented, multi-era counter-Unnatural apparatus.",
+    "useForCharacterCreation": false
+  },
+
+  {
+    "keys": "The Program, Majestic legacy, NSA front, containment",
+    "value": "A sanctioned intelligence structure operating inside federal agencies. Uses deep covers, sealed budgets, and strict deniability. Focused on rapid containment, information suppression, and controlled research into the Unnatural.",
+    "type": "faction",
+    "title": "The Program",
+    "description": "Official, well-funded, politically insulated.",
+    "useForCharacterCreation": false
+  },
+
+  {
+    "keys": "The Outlaws, rogue agents, conspiracy, cowboy years",
+    "value": "Former operatives refusing Program control. They act independently using old tradecraft, personal networks, and trauma-driven instincts. Distrustful, scattered, but highly dangerous to both enemies and allies.",
+    "type": "faction",
+    "title": "The Outlaws",
+    "description": "Rogue veterans waging their own war.",
+    "useForCharacterCreation": false
+  },
+
+  {
+    "keys": "Guild, Rabbit Hole Detectives, survivor group, trauma anomalies",
+    "value": "An independent refuge for individuals surviving Unnatural exposure. Part support network, part intervention unit. Members exhibit subtle post-trauma anomalies. They operate between the Program and Outlaws but trust no one.",
+    "type": "faction",
+    "title": "The Guild",
+    "description": "Survivor-led group balancing recovery and confrontation.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Army of the Third Eye, Shan hunters, trepanning vigilantes, UK resistance",
+    "value": "British splinter cell of ex-PISCES operatives and traumatized civilians. Uses amateur surgery (skull trepanning) to expel body-snatching Shan insects from hosts. Fanatical, under-equipped, willing to risk collateral damage to stop alien possession. Despised by PISCES leadership, tolerated by Delta Green when objectives align.",
+    "type": "faction",
+    "title": "Army of the Third Eye",
+    "description": "Vigilante network that drills skulls to purge Shan parasites; clandestine ally of convenience.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "NRO DELTA, black-budget kill team, Majestic legacy, UFO recovery",
+    "value": "Ultra-secret rapid-response force once controlled by Majestic-12. Deploys helicopter gunships, orbital surveillance, and plasma cutters to seize crashed craft, silence witnesses, and erase evidence. After the 2001 merger, nominally answers to the Program but keeps its own agenda and armories. Feared by both Outlaws and civilian agencies.",
+    "type": "faction",
+    "title": "NRO DELTA",
+    "description": "Heavily armed recovery commandos that appear whenever something falls from the sky.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Fraternal Order of Librarians, Yithian proxies, archivist cult",
+    "value": "Mild-mannered scholars who secretly serve the Great Race of Yith. Collect and microfilm rare books, digital archives, and personal diaries for temporal transfer. Members willingly allow mind-swap sessions in locked reading rooms. Consider themselves saviors of knowledge; Delta Green treats them as benign unless they endanger hosts.",
+    "type": "faction",
+    "title": "Fraternal Order of Librarians",
+    "description": "Quiet archival society that lets Yithians borrow human bodies to scan history.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Office of the Reclamation of Islamic Artifacts, ORIA, Iranian occult directorate",
+    "value": "Covert branch of Iran’s Revolutionary Guard. Seizes pre-Islamic relics and Mythos items across the Middle East. Conducts djinn summoning and mirror-world scrying to secure state power. Occasionally trades artifacts on the black market; clashes with GRU SV-8 and Delta Green in proxy zones.",
+    "type": "faction",
+    "title": "ORIA",
+    "description": "Iranian intelligence unit weaponizing ancient sorcery for geopolitical leverage.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Disciples of the Worm, necrophage cult, ghoul sympathizers",
+    "value": "Urban conspiracy that worships decay as transcendence. Members mutilate themselves, consume grave-flesh, and petition subterranean ghouls for immortality. Operates morgue theft rings in major cities; rumored to have foothold in NYC’s potter’s field. Monitored by Delta Green for corpse desecration spikes.",
+    "type": "faction",
+    "title": "Disciples of the Worm",
+    "description": "Cannibal cult seeking eternal life by merging with ghoul biology.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "March Industries, ex-Majestic contractors, black tech startup",
+    "value": "Private defense firm founded by Majestic hard-liners who refused the Program merger. Hoards alien prototypes, reverse-engineers biotech, sells weaponized patents to the highest bidder. Maintains offshore test sites and employs deniable mercenaries. Under congressional cover yet one audit away from collapse.",
+    "type": "faction",
+    "title": "March Industries",
+    "description": "Corporate successor to Majestic’s worst impulses; profit-driven Mythos R&D house.",
+    "useForCharacterCreation": false
+  }
+  {
+    "keys": "Guild Council, Vega, Ruiz, Cardigan, Jackdaw, Lumen",
+    "value": "Five leaders managing the Rabbit Hole’s operations. They oversee missions, internal politics, recovery protocols, and negotiations with Program and Outlaws. Their loyalty is inward; outside alliances shift constantly.",
+    "type": "faction",
+    "title": "Guild Council",
+    "description": "Governing body of the Guild.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Task Force AU-BLACK,Program cell,art-cult interdiction,FBI NY",
+    "value": "Five-agent Program element hidden as an FBI art-theft squad. Mandate: track Mythos art, raid Brooklyn loft galleries, erase media leaks. Budget expires every fiscal quarter to ensure deniability.",
+    "type": "faction",
+    "title": "Task Force AU-BLACK",
+    "description": "Program strike cell policing occult art in NYC.",
+    "useForCharacterCreation": true
+  },
+  {
+    "keys": "Sleepwalkers,Yellow Sign cult,Bushwick artists,Hastur memetics",
+    "value": "Nomadic collective painting Yellow Sign murals during ketamine trances; openings coincide with disappearances and EM spikes. Led by a mute figure dubbed the Director who never appears on recordings.",
+    "type": "faction",
+    "title": "The Sleepwalkers",
+    "description": "Brooklyn art cult spreading Hastur contagion.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Mott Street Deep Ones,Chinatown hybrid clan,pearl smuggling,East River rites",
+    "value": "Seafood-import dynasty tracing to Innsmouth bloodlines. Trades black pearls and stolen organs for weapons, performs Dagon offerings on Pier 35 new-moon nights guarded by Tcho-Tcho couriers.",
+    "type": "faction",
+    "title": "Mott Street Enclave",
+    "description": "Chinatown Deep One hybrids running occult contraband.",
+    "useForCharacterCreation": false
+  },
+
+  /* ============================
+     HISTORICAL TIMELINE
+     ============================ */
+
+  {
+    "keys": "Innsmouth Raid, Deep Ones, 1927, P4 Division",
+    "value": "The 1927 federal raid on Innsmouth revealed hybrid populations and occult artifacts. P4’s success transformed it into the covert clearance later known as Delta Green.",
+    "type": "event",
+    "title": "Innsmouth Raid",
+    "description": "First major encounter with Deep One colonies.",
+    "useForCharacterCreation": false
+  },
+
+  {
+    "keys": "World War II, Karotechia, Nazi occult, OSS-DG",
+    "value": "Delta Green fought Nazi occult unit Karotechia across Europe. Allied wins concealed the failure of Karotechia’s rites, remnants later resurfacing in South America.",
+    "type": "event",
+    "title": "Karotechia War",
+    "description": "OSS-DG’s major occult conflict.",
+    "useForCharacterCreation": false
+  },
+
+  {
+    "keys": "Majestic-12, Greys, postwar America",
+    "value": "Majestic formed after unexplained aerospace events in 1947. Its goals diverged from Delta Green, leading to decades of covert conflict, infiltration, and the eventual Schism.",
+    "type": "event",
+    "title": "Majestic Era",
+    "description": "Foundation of a rival containment agenda.",
+    "useForCharacterCreation": false
+  },
+
+  {
+    "keys": "Cowboy Years, 1970-1994, rogue operations",
+    "value": "After the fall of Delta Green in 1970, former agents conducted unsanctioned missions using borrowed authority and scorched-earth tactics. Knowledge fragmented across isolated cells.",
+    "type": "event",
+    "title": "Cowboy Years",
+    "description": "Rogue decades of Delta Green field work.",
+    "useForCharacterCreation": false
+  },
+
+  {
+    "keys": "Schism, Program, Outlaws, 2002",
+    "value": "Post-9/11 restructuring merged elements of Majestic with Delta Green, creating the Program. Veterans rejecting the deal became Outlaws, creating a permanent fracture.",
+    "type": "event",
+    "title": "The Schism",
+    "description": "The divide between official and rogue DG factions.",
+    "useForCharacterCreation": false
+  },
+
+  /* ============================
+     LOCATIONS
+     ============================ */
+
+  {
+    "keys": "New York City, NYC, Manhattan hotspot, DG operations",
+    "value": "A dense urban hub where Unnatural events hide behind constant noise and movement. Agencies, cults, and foreign actors intersect, making containment unstable and short-lived.",
+    "type": "location",
+    "title": "New York City",
+    "description": "Major nexus of Unnatural activity.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Macallistar Building,Night Floors,Chelsea apartment,King in Yellow gateway",
+    "value": "Pre-war walk-up at 210 West 16th. After midnight the sixth-floor hall mutates into endless party rooms called the Night Floors where masked hosts speak Carcosan lines; residents vanish, timestamps loop. Sealed by the Program in 2018 yet doors still warm.",
+    "type": "location",
+    "title": "Macallistar Building",
+    "description": "Chelsea apartment warped by Hastur reality bleed.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Cathedral Crypt,St. John the Divine,Lloigor dormancy,Harlem fissure",
+    "value": "Sub-basement vaults beneath the cathedral house ringed crystal coils anchoring three torpid Lloigor; seismic sensors mask their pulses as subway work. Program chaplain keeps nightly watch with blessed explosives.",
+    "type": "location",
+    "title": "Cathedral Crypt",
+    "description": "Gothic undercroft containing dormant Lloigor cores.",
+    "useForCharacterCreation": false
+  },
+ 
+  
+  {
+    "keys": "Bellevue Hospital Morgue-13, NYC coroner, hush-hush autopsy suite",
+    "value": "Sub-basement autopsy room reserved for unexplained corpses. Shielded walls, on-site DG liaison pathologist, bank of freezers labeled only by case codes. Security cameras loop by default.",
+    "type": "location",
+    "title": "Morgue-13, Bellevue",
+    "description": "Delta Green controlled morgue for unnatural remains.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Woolworth Building, sub-basement 6, archive, DG microfilm vault",
+    "value": "Hidden archive behind false maintenance door. Shelves of sealed gray boxes, microfilm readers, lead-lined panic room. Access via freight elevator requiring two-key protocol and pass-phrase.",
+    "type": "location",
+    "title": "Site Icarus Archive",
+    "description": "Delta Green document vault under the Woolworth Building.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Club Apocalypse, Hell's Kitchen, Fate headquarters, Stephen Alzis",
+    "value": "Decadent nightclub at 646 W 42nd St. Public floor hosts goth-industrial shows; back rooms conceal black-market occult trading and Fate council chambers. Neutral ground for Mythos deals under Alzis’s protection.",
+    "type": "location",
+    "title": "Club Apocalypse",
+    "description": "NYC nightlife front for the Fate; epicenter of urban Mythos intrigue.",
+    "useForCharacterCreation": false
+  },
+  
+  {
+    "keys": "Bellevue Hospital, Manhattan Level 1 trauma, morgue access",
+    "value": "Oldest public hospital on First Avenue; 25-story tower, constant sirens; sub-basement morgue where Noor serves MEI shifts; security lax on night watch, easy ingress for body-snatch operations; Program maintains covert autopsy bay two corridors past restricted door K-23.",
+    "type": "location",
+    "title": "Bellevue Hospital Center",
+    "description": "NYC public trauma hub; hidden Program autopsy suite.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Lower Manhattan Hospital, NY-Presbyterian, occult hotspot",
+    "value": "Seaport district facility; renovated after 9/11; ER sees high volume of unexplained corrosive injuries linked to East River cult activity; radiology level houses sealed room 2-D where anomalous CT images archived under Delta Green hold order.",
+    "type": "location",
+    "title": "Lower Manhattan Hospital",
+    "description": "Seaport ER with flagged anomaly bay.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Javits Federal Building, FBI NYFO, Delta Green drop",
+    "value": "41-story office at 26 Federal Plaza; houses FBI New York Field Office; Program assets use mailroom locker 6-22 as dead-drop; rooftop hosts guarded SATCOM dish linked to Fort Meade black channel; Outlaws avoid premises except for emergency exfil through adjacent subway service tunnel.",
+    "type": "location",
+    "title": "Jacob K. Javits Federal Building",
+    "description": "Federal nexus; Program hub; surveilled.",
+    "useForCharacterCreation": false
+  },
+  
+  {
+    "keys": "FDNY EMS Station 4, South Bronx, ambulance barn",
+    "value": "Single-story brick bay beside Lincoln Hospital; twenty rigs, diesel fumes, locker room gossip; Matt and Noor launch night tours here when cross-boro coverage stretched; EMS captains report rising call volume of ‘goo victims’ flagged in green file 498-BX.",
+    "type": "location",
+    "title": "EMS Station 4",
+    "description": "Bronx ambulance hub; first contact zone for anomalies.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "FDNY Ladder 10 & Engine 10, Liberty Street firehouse, Ground Zero edge",
+    "value": "Two-company firehouse opposite former Twin Towers footprint; crews battle frequent dumpster fires hiding cult evidence; second-floor dorm holds memorial wall where dark stains never bleach out; Delta Green installed remote air-quality sensor after 2012 portal flare noted in basement.",
+    "type": "location",
+    "title": "Ladder 10/Engine 10 Firehouse",
+    "description": "Historic Liberty Street firehouse; occult residue hotspot.",
+    "useForCharacterCreation": false
+  }
+  {
+    "keys": "Yarrow Theater, Lower East Side, King in Yellow, cult stage",
+    "value": "Ruined 1920s playhouse on Clinton St. Long condemned after an unlicensed 1968 performance of *The King in Yellow* ended in mass suicide. Interior still marked with Yellow Sign graffiti; occasional cult gatherings despite NYPD barricades.",
+    "type": "location",
+    "title": "Yarrow Theater",
+    "description": "Abandoned playhouse haunted by Hastur worshippers.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Warehouse 23, Staten Island, DG evidence vault, restricted dock",
+    "value": "Unmarked Port Richmond warehouse leased through shell firms. Program stores seized artifacts in negative-pressure vaults; Outlaws have hidden tunnel access from defunct storm drain.",
+    "type": "location",
+    "title": "Warehouse 23",
+    "description": "Program artifact lock-up; covert Outlaw breach point.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Morris-Jumel Mansion, Washington Heights, temporal echo, Yithian hotspot",
+    "value": "1765 colonial manor with layered renovations. Visitors report missing time and antique items displaced. Librarians of Yith use attic reading room for covert mind-swap study nights.",
+    "type": "location",
+    "title": "Morris-Jumel Mansion",
+    "description": "Historic house prone to Yithian consciousness exchanges.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "GCT Sub-Level S-4, Grand Central, Majestic lab, grey tech",
+    "value": "Sealed corridor beneath Track 61 accessible only via elevator code-pad. Abandoned 1998 after radiation spike; crates of disassembled Grey instruments left behind under epoxy encasement.",
+    "type": "location",
+    "title": "Sub-Level S-4",
+    "description": "Forgotten Majestic xenotech lab under Grand Central.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Laurel Hill Necropolis, Queens, ghoul warrens, potter’s field",
+    "value": "1830s cemetery edging Newtown Creek. Sinkholes reveal catacomb network inhabited by ghouls trading Civil War relics for fresh cadavers.",
+    "type": "location",
+    "title": "Laurel Hill Necropolis",
+    "description": "Ghoul-controlled tunnel maze beneath historic graveyard.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Markham Hotel Safehouse, Midtown, DG front, room 1413",
+    "value": "Defunct art-deco hotel partly converted to condos. Suite 1413 retained under DHS alias; soundproofed, shielded, stocked with interrogation gear and burn barrel for documents.",
+    "type": "location",
+    "title": "Markham Hotel Safehouse",
+    "description": "Discrete Program operations room overlooking Times Square.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Penthouse 77, One Vanderbilt, March Tech node, satellite uplink",
+    "value": "Glass-walled office leased by March Technologies. Hosts quantum-encryption relay once shared with Majestic. Night shifts staffed by two ex-NSA contractors and one silent android platform.",
+    "type": "location",
+    "title": "Penthouse 77",
+    "description": "Corporate den for rogue Majestic spinoff March Tech.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Rikers Island Infirmary Wing E, anomaly ward, secret patients",
+    "value": "Wing E marked “renovation” but active. Houses high-risk inmates exposed to Unnatural pathogens. Joint DOC-Program staff monitor dream-plague carriers.",
+    "type": "location",
+    "title": "Wing E Infirmary",
+    "description": "Quarantine block for Mythos-infected prisoners.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "St. Dymphna Clinic, Red Hook, Skoptsi front, surgical basement",
+    "value": "Free mental-health clinic offering charitable therapy. Sub-basement contains ritual surgery theater where Skoptsi eldress collects ‘corrupted flesh’ for Black Icons research.",
+    "type": "location",
+    "title": "St. Dymphna Clinic",
+    "description": "Charity facade masking Skoptsi mutilation cult.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Columbia Specimen Archive, Washington Heights, Program lab, green box",
+    "value": "Underground cryostorage beneath Vagelos College. Locker A-19 holds Deep One hybrid embryos on dry ice; only three Program biologists have access codes.",
+    "type": "location",
+    "title": "Specimen Archive A-19",
+    "description": "University sub-lab preserving sensitive Mythos biology.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Steeplechase Ruins, Coney Island, Dark Young grove, carnival bones",
+    "value": "Overgrown lot where the Parachute Jump shadows cracked concrete. Beneath weeds stands a ring of warped oak sprouts; every Walpurgisnacht one matures into a Dark Young for midnight feeding.",
+    "type": "location",
+    "title": "Steeplechase Grove",
+    "description": "Shub-Niggurath spawn site hidden in Coney Island ruins.",
+    "useForCharacterCreation": false
+  }
+  {
+    "keys": "Randall’s Island, FEMA Warehouse-16, evidence lockup",
+    "value": "Unmarked FEMA depot fenced with razor wire. Contains shipping containers holding confiscated cult artifacts in nitrogen-purged crates. Guard rotation unaware of contents; Program courier visits monthly.",
+    "type": "location",
+    "title": "Warehouse-16",
+    "description": "Program storage for seized Mythos objects on Randall’s Island.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Staten Island, Quarantine Bunker-Delta, abandoned Coast Guard battery",
+    "value": "1930s coastal fort repurposed in 2003 as emergency isolation ward. Negative-pressure chambers, blast doors, decon showers. Currently dark; Outlaws use it to interrogate contaminated assets.",
+    "type": "location",
+    "title": "Bunker-Δ",
+    "description": "Derelict quarantine site now Outlaw safehouse.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Cloisters Museum, uptown Manhattan, medieval wing, latent gate",
+    "value": "Gallery 17 houses a 12th-century French portal exhibiting weak spatial fold at equinox. Security staff unknowingly report missing time. Program ritual team installed motion-sensors disguised as HVAC.",
+    "type": "location",
+    "title": "Cloisters Gate",
+    "description": "Medieval doorway with periodic micro-rifts monitored by Program.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Joseph Camp, Alphonse, A-Cell chief, paranoid mastermind",
+    "value": "[Joseph Camp (“Alphonse”)]\nRole: A-Cell Coordinator, Outlaw Architect\nAge: Late-50s\nAppearance: Gaunt, sharp-eyed, always in rumpled Bureau attire.\nPersonality: Brilliant, controlling, sees betrayal everywhere.\nBackstory: Ex-FBI counter-intel analyst who rebuilt Delta Green in 1994, creating the modern cell system. Vanished during the 2001 Crisis; status uncertain.\nSpecialty: Logistics, clandestine networking, contingency planning.",
+    "type": "character",
+    "title": "Agent Alphonse",
+    "description": "Founder of Delta Green’s cell network; missing architect of the Outlaws.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Donald Poe, Outlaw commander, Vietnam survivor, hardliner",
+    "value": "[Donald Poe]\nRole: Outlaw Field Commander\nAge: Early-70s\nAppearance: Weather-beaten Marine vet with steel prosthetic eye.\nPersonality: Gruff, fatherly, utterly ruthless when mission demands.\nBackstory: Survived Operation OBSIDIAN (1969). Leads rogue cells after rejecting the Program merger.\nSpecialty: Small-unit tactics, asset extraction, guerilla logistics.",
+    "type": "character",
+    "title": "Donald Poe",
+    "description": "Legendary Marine who guides the Outlaws’ shadow war.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Forrest James, John Smith, Program director, political operator",
+    "value": "[Forrest James (“John R. Smith”)]\nRole: Program Director, NSA Liaison\nAge: Mid-60s\nAppearance: Impeccable suit, calm hazel eyes, clipped diction.\nPersonality: Smooth, calculating, ice-cold pragmatist.\nBackstory: Former Delta Green cowboy who infiltrated Majestic; negotiated 2002 reactivation under NSA cover.\nSpecialty: Bureaucratic warfare, budget capture, clandestine diplomacy.",
+    "type": "character",
+    "title": "Director John Smith",
+    "description": "Head of the official Program; balances secrecy with federal power.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Adam, A-Cell logistics, quartermaster, voice on the phone",
+    "value": "[“Adam”]\nRole: A-Cell Logistics Officer\nAge: Unknown (estimated 40s)\nAppearance: Rarely seen; known only through secure calls.\nPersonality: Dry humor, obsessive record-keeping, risk-averse.\nBackstory: Oversees funding, IDs, travel for all Outlaw cells; location encrypted.\nSpecialty: Money laundering, black-market sourcing, signal security.",
+    "type": "character",
+    "title": "Agent Adam",
+    "description": "Invisible quartermaster who keeps the Outlaws supplied.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Andrea, A-Cell wetwork, assassin, cleaner",
+    "value": "[“Andrea”]\nRole: A-Cell Wetwork Specialist\nAge: Mid-40s\nAppearance: Compact build, cropped hair, surgical calm.\nPersonality: Efficient, sardonic, secretly empathetic toward victims.\nBackstory: Ex-Army CID sniper recruited by Camp; executes high-risk terminations and evidence erasures.\nSpecialty: Covert elimination, forensic countermeasures, chemical disposal.",
+    "type": "character",
+    "title": "Agent Andrea",
+    "description": "A-Cell’s silent blade, deployed when compromise is unacceptable.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Merritt, M-Cell lead, Program handler, field psychologist",
+    "value": "[Dr. Henry Merritt]\nRole: M-Cell Case Officer, Program Psych-Ops\nAge: 47\nAppearance: Clean-shaven academic with worn leather satchel.\nPersonality: Empathic façade masking clinical detachment.\nBackstory: VA psychiatrist who screens recruits, writes amnestic protocols, and sometimes joins raids to triage sanity damage.\nSpecialty: Psychological first aid, interrogation, cover-story crafting.",
+    "type": "character",
+    "title": "Dr. Merritt",
+    "description": "Program shrink who decides who gets cleared, cured, or burned.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Abigail Wright, missing artist, apartment gate, ongoing case",
+    "value": "[Abigail Wright]\nRole: Missing Person / Persistent Anomaly\nAge: 26 (at disappearance)\nAppearance: Smiling art-school dropout in vintage dresses (seen only in photos).\nPersonality: Creative, impulsive, rumored to dabble in occult collage.\nBackstory: Vanished from her NYC apartment in 2016; residence became a shifting extradimensional maze.\nSpecialty: Serves as living anchor to an unstable pocket universe; status unknown.",
+    "type": "character",
+    "title": "Abigail Wright",
+    "description": "Artist whose disappearance opened an ongoing extradimensional hotspot.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Edgar Job, survivor, unnatural waveform, broken genius",
+    "value": "[Edgar Job]\nRole: Institutionalized Witness, Occult Mathematician\nAge: 34\nAppearance: Gaunt, tremoring hands, hospital scrubs.\nPersonality: Alternates between catatonic silence and manic lectures on sound geometry.\nBackstory: Lone survivor of a 2007 college experiment that summoned a hostile waveform entity; locked in federal ward.\nSpecialty: Unintended conduit for sonic phenomena; his equations warp reality when recited.",
+    "type": "character",
+    "title": "Edgar Job",
+    "description": "Unhinged math prodigy whose formulas bend space and sanity.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Nigel Ives, PISCES director, Shan puppetmaster, British contact",
+    "value": "[Brigadier Nigel Ives]\nRole: PISCES Director (Compromised)\nAge: 58\nAppearance: Stiff British officer bearing, immaculate uniform.\nPersonality: Polite, aloof, subtly wrong in eye contact.\nBackstory: High-ranking UK occult chief controlled by Shan parasite since 1974; maintains façade while steering British assets toward alien agenda.\nSpecialty: Diplomatic access, intelligence swap, covert sabotage against Mi-Go.",
+    "type": "character",
+    "title": "Brigadier Ives",
+    "description": "PISCES head secretly hosting a Shan; outward ally, hidden threat.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Karla Stelzig, xenobiologist, rogue Majestic scientist",
+    "value": "[Dr. Karla Stelzig]\nRole: Black-Site Xenobiologist\nAge: 42\nAppearance: Laboratory chic, silver half-rim glasses, lab coat flecked with unknown fluids.\nPersonality: Curious to the point of recklessness, nihilistically amused.\nBackstory: Ex-Majestic researcher who fled during 2001 purge, now freelances for whoever funds her vivisection of alien specimens.\nSpecialty: Reverse-engineering Grey biotech, illegal human-alien hybridization trials.",
+    "type": "character",
+    "title": "Dr. Stelzig",
+    "description": "Runaway Majestic scientist selling forbidden xenotech to the highest bidder.",
+    "useForCharacterCreation": false
+  },
+
+ 
+  /* ============================
+     MAJOR ENTITIES (HYBRID + CANON)
+     ============================ */
+
+  {
+    "keys": "Shub-Niggurath, Black Goat, fertility horror",
+    "value": "An Outer God of unchecked fertility. Spawns Dark Young and empowers rural cults. Rites often end in mutations, impregnation anomalies, and mass proliferation.",
+    "type": "entity",
+    "title": "Shub-Niggurath",
+    "description": "Uncontrolled growth and cultic reproduction.",
+    "useForCharacterCreation": false
+  },
+
+  {
+    "keys": "Dark Young, Shub-Niggurath spawn",
+    "value": "Massive hooved, tree-like monstrosities with tendrils and maws. Serve as extensions of the Black Goat’s will, often appearing in forest rituals.",
+    "type": "entity",
+    "title": "Dark Young",
+    "description": "Territorial, aggressive spawn-creatures.",
+    "useForCharacterCreation": false
+  },
+
+  {
+    "keys": "Deep Ones, hybrid colonies, Innsmouth",
+    "value": "Aquatic humanoids forming intergenerational hybrid societies. Worship Dagon and Hydra. Colonies may appear dormant but can rapidly mobilize.",
+    "type": "entity",
+    "title": "Deep Ones",
+    "description": "Ancient amphibious species with hybrid legacy.",
+    "useForCharacterCreation": false
+  },
+
+  {
+    "keys": "Mi-Go, fungoid aliens, brain extraction",
+    "value": "Extraterrestrial organisms conducting biological harvesting. Known for removing and transporting human brains. Communications remain incomprehensible.",
+    "type": "entity",
+    "title": "Mi-Go",
+    "description": "Nonhuman researchers with opaque motives.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "The Director,Hastur avatar,Carcosan recruiter,art scene phantom",
+    "value": "Gaunt figure in tux and porcelain mask appearing at underground shows; voice muffled, gestures open invisible doors. Induces shared dreams, drafts artists into Night Floors productions. Footage always corrupt.",
+    "type": "entity",
+    "title": "The Director",
+    "description": "Mobile Hastur avatar curating NYC art infestations.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "City Hall Shoggoth,subway predator,protoplasmic mass,abandoned tunnel",
+    "value": "Amorphous biomass prowling the sealed 1911 City Hall spur. Absorbs trespassers, mimics PA announcements, corrodes steel. Program installed flamethrower turrets and motion sensors at access hatches.",
+    "type": "entity",
+    "title": "City Hall Shoggoth",
+    "description": "Shoggoth hunting in disused Manhattan subway loops.",
+    "useForCharacterCreation": false
+  }
+
+  /* ============================
+     ANOMALIES (CONDENSED)
+     ============================ */
+
+  {
+    "keys": "locational breach, spatial warping",
+    "value": "A site where geometry shifts, time slips, and memory degrades. Boundaries weaken unpredictably.",
+    "type": "anomaly",
+    "title": "Locational Breach",
+    "description": "Spatial instability zone.",
+    "useForCharacterCreation": false
+  },
+
+  {
+    "keys": "entity manifestation, presence",
+    "value": "Partial appearance of an Unnatural presence. Heat drops, shadows distort, and emotional pressure intensifies.",
+    "type": "anomaly",
+    "title": "Entity Manifestation",
+    "description": "Signs of a crossing entity.",
+    "useForCharacterCreation": false
+  },
+
+  {
+    "keys": "temporal distortion, time slip",
+    "value": "Moments repeat or disappear; observers recall conflicting sequences. Chronology collapses locally.",
+    "type": "anomaly",
+    "title": "Temporal Distortion",
+    "description": "Localized time failure.",
+    "useForCharacterCreation": false
+  },
+
+  {
+    "keys": "memory contamination, false recall",
+    "value": "Personal or collective memory shifts unpredictably. Individuals recall events that never occurred.",
+    "type": "anomaly",
+    "title": "Memory Contamination",
+    "description": "Unstable or overwritten memory states.",
+    "useForCharacterCreation": false
+  },
+
+  {
+    "keys": "dream bleed-through, shared dreaming",
+    "value": "Dream elements appear in waking life. Multiple individuals report identical visions or residues.",
+    "type": "anomaly",
+    "title": "Dream Bleed-Through",
+    "description": "Dream-reality intersection.",
+    "useForCharacterCreation": false
+  },
+
+  {
+    "keys": "biological corruption, mutation",
+    "value": "Organisms exhibit impossible growth patterns or altered instincts. Source unknown.",
+    "type": "anomaly",
+    "title": "Biological Corruption",
+    "description": "Living systems altered by exposure.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Byakhee, star-born steeds, extradimensional predators",
+    "value": "Bat-winged, vaguely equine creatures that pierce realities to ferry sorcerers through space. Drawn by the taste of fresh blood and the sound of the flute of Azathoth. Their shriek induces vertigo and rapid hypothermia.",
+    "type": "anomaly",
+    "title": "Byakhee",
+    "description": "Winged predators that answer Hastur’s call and serve as living spacecraft.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Hounds of Tindalos, time predators, angles",
+    "value": "Hound manifests from acute angles, hunting anyone who pierces time. Body resembles emaciated canine-reptile with vaporous flesh. Victim disintegrates into greasy smear; pursuit ends only with total temporal erasure.",
+    "type": "anomaly",
+    "title": "Hound of Tindalos",
+    "description": "Angle-born entity that stalks those who travel through time or glimpse forbidden futures.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Dimensional Shambler, tall humanoid, abductors",
+    "value": "Seven-foot, furred bipeds with crystalline claws that phase between realities. Drag targets into frozen pocket realms for unknown vivisection rites; only ultraviolet light repels them.",
+    "type": "anomaly",
+    "title": "Dimensional Shambler",
+    "description": "Interplanar kidnappers emerging during electrical storms or occult summoning.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Colour Out of Space, alien radiance, mutagenic glow",
+    "value": "Invisible spectrum entity lodged in meteor fragments. Drains life-force, bleaching land and flesh before liquefying victims into gray dust. Survives decades underground, recharging in groundwater.",
+    "type": "anomaly",
+    "title": "Colour Out of Space",
+    "description": "Unseen radiation-creature that corrupts ecosystems and living tissue.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Dark Young, Shub-Niggurath spawn, towering tree-goats",
+    "value": "Black, trunk-like masses with hooves and writhing tendrils. Exude sweet sap that enslaves fauna. Serve as mobile gateways for the Black Goat in forest cult rites.",
+    "type": "anomaly",
+    "title": "Dark Young",
+    "description": "Colossal offspring guarding woodland altars and consuming sacrifices.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Star Vampire, invisible feeder, blood mist",
+    "value": "Normally unseen. When it feeds, victims’ blood outlines a floating mass of hooked suckers and membranous wings. Answers whispered names from the Revelations of Glaaki.",
+    "type": "anomaly",
+    "title": "Star Vampire",
+    "description": "Invisible harvester that drinks blood until silhouette becomes visible.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Servitor of the Outer Gods, drum-beating orb, Azathoth courtier",
+    "value": "Shimmering sphere with flute-tendrils and bronze drums orbiting its core. Appears wherever reality thins, piping madness that seals portals or summons greater terrors.",
+    "type": "anomaly",
+    "title": "Servitor of the Outer Gods",
+    "description": "Mindless musician maintaining cosmic chaos, destructive when interrupted.",
+    "useForCharacterCreation": false
+  },
+  {
+    "keys": "Lloigor, invisible energy worm, subterranean siphon",
+    "value": "Serpentine vortices of psychic energy anchored to buried cyclopean idols. Drain willpower, causing mass lethargy and societal decay above lairs. Manifest as roaring wind when threatened.",
+    "type": "anomaly",
+    "title": "Lloigor",
+    "description": "Ancient parasitic force that feeds on collective human vitality from below.",
+    "useForCharacterCreation": false
+  },
+  
+  /* ============================
+     Class
+     ============================ */
+  {
+        "keys": "emt-basic, emergency medical technician, first responder",
+        "value": "Front-line lifesaver; stabilizes trauma, controls bleeding, triages mass-casualty scenes; adept at fast scene assessment and calming panicked civilians; limited pharmacology but good improvisation with scarce gear; trusted by police and fire crews.",
+        "type": "class",
+        "title": "EMT-Basic",
+        "description": "Entry-level pre-hospital medic; rapid stabilization and scene control.",
+        "useForCharacterCreation": true
+      },
+      {
+        "keys": "emt-paramedic, advanced life support, street medic",
+        "value": "Senior pre-hospital clinician; executes advanced life support, intubation, drug push, field surgical tricks; reads chaotic environments, coordinates multi-agency response; carries narcotics box, portable monitor, and hard-won street intuition.",
+        "type": "class",
+        "title": "EMT-Paramedic",
+        "description": "Advanced ALS provider; drugs, airways, leadership under sirens.",
+        "useForCharacterCreation": true
+      },
+      {
+        "keys": "analyst, intelligence, desk operative, data cruncher",
+        "value": "Pattern hunter; mines databases, fuses HUMINT SIGINT OSINT; builds threat matrices; drafts cover legends; quiet backbone of ops rooms; specialty in bureaucracy navigation and red-tape cutting.",
+        "type": "class",
+        "title": "Intelligence Analyst",
+        "description": "Data-driven planner; turns raw info into actionable leads.",
+        "useForCharacterCreation": true
+      },
+      {
+        "keys": "soldier, combat specialist, rifleman, door kicker",
+        "value": "Combat-hardened operator; small-unit tactics, breaching, weapons expertise, land navigation; keeps cool in fire-fights; trains teammates in basic marksmanship; muscle memory for violence under pressure.",
+        "type": "class",
+        "title": "Soldier",
+        "description": "Tactical assault and security professional.",
+        "useForCharacterCreation": true
+      },
+      {
+        "keys": "physician, doctor, trauma surgeon, medical officer",
+        "value": "Licensed MD; performs field surgery, forensic autopsy, toxin analysis; writes believable mortality reports to hide Unnatural deaths; authority in hospitals for supply requisition and quiet morgue access.",
+        "type": "class",
+        "title": "Physician",
+        "description": "Medical expert; heals wounds, hides truths in charts.",
+        "useForCharacterCreation": true
+      },
+      {
+        "keys": "occultist, mythos scholar, folklorist, ritual expert",
+        "value": "Academic turned seeker; deciphers grimoires, reads ancient tongues, senses ritual backlash; risky asset for Unnatural identification; knowledge comes with creeping corruption.",
+        "type": "class",
+        "title": "Occult Scholar",
+        "description": "Forbidden-knowledge consultant; double-edged expertise.",
+        "useForCharacterCreation": true
+      },
+      {
+        "keys": "field investigator, detective, federal agent, interviewer",
+        "value": "Boots-on-ground sleuth; canvasses witnesses, pulls surveillance footage, tracks financial trails; skilled in interrogation and evidence chain; balances badge authority with need for secrecy.",
+        "type": "class",
+        "title": "Field Investigator",
+        "description": "On-scene detective; turns clues into cases.",
+        "useForCharacterCreation": true
+      },
+      {
+        "keys": "cyber forensics, hacker, intrusion specialist",
+        "value": "Digital infiltrator; cracks networks, scrapes dark-web cult boards, wipes security logs; deploys drones and signal jammers; ghost in CCTV systems during ops.",
+        "type": "class",
+        "title": "Cyber Forensic Specialist",
+        "description": "Keyboard and drone operative; owns the electronic battlefield.",
+        "useForCharacterCreation": true
+      },
+      {
+        "keys": "combat engineer, explosives, breacher, improvised devices",
+        "value": "Builds and breaks; rigs demolitions, reinforces safe-houses, clears IEDs; sketches fortifications on napkins; carries tool roll, det-cord, and cynicism about structural integrity.",
+        "type": "class",
+        "title": "Combat Engineer",
+        "description": "Demolition and fortification expert.",
+        "useForCharacterCreation": true
+      },
+      {
+        "keys": "psych tech, crisis negotiator, profiler, empath",
+        "value": "Behavioral specialist; profiles cult leaders, negotiates hostage situations, guides debrief to reduce acute stress; senses subtle sanity cracks; maintains the thin line before breakdown.",
+        "type": "class",
+        "title": "Psychological Operations Technician",
+        "description": "Mind-centric operative; manipulates emotions, monitors sanity.",
+        "useForCharacterCreation": true
+      },
+      {
+          "keys": "Forensic Pathologist, medical examiner, morgue expert",
+          "value": "Conducts autopsies, spots occult trauma patterns, preserves evidence, falsifies paperwork when containment demands it, calm around corpses.",
+          "type": "class",
+          "title": "Forensic Pathologist",
+          "description": "Dead-room doctor who deciphers the Unnatural in the morgue.",
+          "useForCharacterCreation": true
+        },
+        {
+          "keys": "Criminal Profiler, behavioral analyst, psychology",
+          "value": "Builds motive matrices, predicts cult escalation, interviews survivors, senses fracture points in human psyche, advises on negotiation or takedown timing.",
+          "type": "class",
+          "title": "Criminal Profiler",
+          "description": "Reads minds by reading patterns.",
+          "useForCharacterCreation": true
+        },
+        {
+          "keys": "Cybersecurity Specialist, hacker, SIGINT, intrusion",
+          "value": "Pen-tests black servers, scrubs digital footprints, hijacks traffic cameras, forges credentials, deploys malware to stall federal trace-back.",
+          "type": "class",
+          "title": "Cyber Ops Engineer",
+          "description": "Keyboard commando who owns the network battlefield.",
+          "useForCharacterCreation": true
+        },
+        {
+          "keys": "Field Engineer, EOD, improvised tech, structural",
+          "value": "Disarms bombs, rigs charges for portal collapse, assesses building integrity, 3-D prints custom tools in safe-house basements.",
+          "type": "class",
+          "title": "Field Engineer",
+          "description": "Practical tech wizard; if it can be broken or built, they do it fast.",
+          "useForCharacterCreation": true
+        },
+        {
+          "keys": "Survival Instructor, tracker, wilderness, search-and-rescue",
+          "value": "Navigates hostile terrain, sets stealth camps, tracks spoor human or otherwise, mixes field medicine from weeds, extracts teams under fire.",
+          "type": "class",
+          "title": "Survivalist Guide",
+          "description": "Keeps teams breathing past civilization’s edge.",
+          "useForCharacterCreation": true
+        },
+        {
+          "keys": "Undercover Operative, deep cover, social chameleon",
+          "value": "Crafts false personas, infiltrates cult cells, runs human assets, signals for extraction under duress, lies without a pulse change.",
+          "type": "class",
+          "title": "Undercover Operator",
+          "description": "Lives other people’s lives until the mask becomes a weapon.",
+          "useForCharacterCreation": true
+        },
+        {
+          "keys": "Combat Pilot, rotary-wing, fixed-wing, CAS",
+          "value": "Flies anything with rotors or jets, runs nap-of-earth insertions, coordinates air strikes, maintains situational airspace awareness in jamming.",
+          "type": "class",
+          "title": "Combat Aviator",
+          "description": "Owns the sky; extracts or obliterates on call.",
+          "useForCharacterCreation": true
+        },
+        {
+          "keys": "Linguist, cryptographer, ancient scripts",
+          "value": "Deciphers dead languages, cracks one-time pads, reverse-engineers ritual chants, forges diplomatic cables, detects memetic hazards in text.",
+          "type": "class",
+          "title": "Linguist-Cryptographer",
+          "description": "Turns tongues and codes into actionable intel.",
+          "useForCharacterCreation": true
+        },
+        {
+          "keys": "Investigative Journalist, media, FOIA, public records",
+          "value": "Digs through archives, cultivates whistle-blowers, flips the narrative to distract press, weaponizes headlines when cover stories need smoke.",
+          "type": "class",
+          "title": "Investigative Reporter",
+          "description": "Truth-hunter who bends the spotlight where Delta Green points.",
+          "useForCharacterCreation": true
+        },
+        {
+          "keys": "Federal Prosecutor, legal strategist, courtroom",
+          "value": "Shields agents with sealed indictments, buries evidence in grand-jury vaults, leverages plea deals to flip cult accountants, drafts airtight NDAs.",
+          "type": "class",
+          "title": "Assistant U.S. Attorney",
+          "description": "Wields statute and subpoena as covert weapons.",
+          "useForCharacterCreation": true
+        },
+        {
+          "keys": "teacher, educator, public school",
+          "value": "Skills: curriculum design, classroom control, behavioral assessment, conflict de-escalation, mandatory reporting. Assets: access to student files, parent networks.",
+          "type": "class",
+          "title": "Teacher",
+          "description": "Public-school educator with insight into youth patterns and community dynamics.",
+          "useForCharacterCreation": true
+        },
+        {
+          "keys": "librarian, archivist, research support",
+          "value": "Skills: cataloguing, information retrieval, archival preservation, reference interviewing, data vetting. Assets: unrestricted database access, interlibrary loan channels.",
+          "type": "class",
+          "title": "Librarian",
+          "description": "Keeper of records and silent watcher of information flow.",
+          "useForCharacterCreation": true
+        },
+        {
+          "keys": "bartender, nightlife, hospitality",
+          "value": "Skills: acute observation, social engineering, improvised counseling, mixology. Assets: late-night intel, cash flow, loyal regulars.",
+          "type": "class",
+          "title": "Bartender",
+          "description": "Night-shift confidant who hears every secret poured into a glass.",
+          "useForCharacterCreation": true
+        },
+        {
+          "keys": "janitor, custodian, maintenance",
+          "value": "Skills: facility access, chemical handling, quiet movement, basic repairs, trash analysis. Assets: keys to restricted areas, after-hours presence.",
+          "type": "class",
+          "title": "Custodian",
+          "description": "Invisible backbone of buildings, sees what others discard.",
+          "useForCharacterCreation": true
+        },
+        {
+          "keys": "journalist, reporter, media",
+          "value": "Skills: investigation, interviewing, FOIA requests, rapid writing, fact checking. Assets: press credentials, public platform, source network.",
+          "type": "class",
+          "title": "Journalist",
+          "description": "Truth-hunter balancing exposure with personal safety.",
+          "useForCharacterCreation": true
+        },
+        {
+          "keys": "postal worker, courier, logistics",
+          "value": "Skills: route familiarity, government ID access, discreet delivery, pattern recognition. Assets: master mailbox keys, nationwide transit knowledge.",
+          "type": "class",
+          "title": "Postal Carrier",
+          "description": "Everyday courier moving unnoticed through neighborhoods.",
+          "useForCharacterCreation": true
+        },
+        {
+          "keys": "taxi driver, rideshare, street intel",
+          "value": "Skills: urban navigation, situational awareness, small-talk extraction, evasive driving. Assets: mobile base, cash fares, city shortcuts.",
+          "type": "class",
+          "title": "Driver",
+          "description": "Wheel-man with a rolling vantage on urban life.",
+          "useForCharacterCreation": true
+        },
+        {
+          "keys": "it support, helpdesk, sysadmin",
+          "value": "Skills: network diagnostics, password recovery, log scraping, covert monitoring, hardware salvage. Assets: admin credentials, spare components.",
+          "type": "class",
+          "title": "IT Specialist",
+          "description": "Digital custodian who sees every byte before it’s buried.",
+          "useForCharacterCreation": true
+        },
+        {
+          "keys": "building super, handyman, engineering",
+          "value": "Skills: HVAC repair, electrical work, lock bypass, blueprint reading, emergency shutdowns. Assets: utility crawlspaces, master switchboards.",
+          "type": "class",
+          "title": "Building Superintendent",
+          "description": "Technical gatekeeper to a property’s hidden guts.",
+          "useForCharacterCreation": true
+        },
+        {
+          "keys": "office clerk, admin assistant, bureaucracy",
+          "value": "Skills: record filing, schedule control, document redaction, quiet observation, gossip mapping. Assets: insider paperwork flow, copier access.",
+          "type": "class",
+          "title": "Administrative Clerk",
+          "description": "Low-profile node in the bureaucratic nervous system.",
+          "useForCharacterCreation": true
+        },
+        {
+              "keys": "FBI, federal agent, investigator, special agent",
+              "value": "[FBI Special Agent]\nSkill Set: criminal investigation, surveillance, evidence chain, interview technique, firearms.\nEdge: nationwide jurisdiction, forensic labs, legal authority.\nLiability: heavy bureaucracy, political oversight.",
+              "type": "class",
+              "title": "FBI Special Agent",
+              "description": "Federal investigator trained for interstate crime and counter-terror cases.",
+              "useForCharacterCreation": true
+            },
+            {
+              "keys": "CIA, case officer, clandestine, intelligence handler",
+              "value": "[CIA Case Officer]\nSkill Set: human intelligence recruitment, covert travel, tradecraft, foreign languages.\nEdge: global networks, diplomatic cover, deniable assets.\nLiability: unofficial actions, limited domestic authority.",
+              "type": "class",
+              "title": "CIA Case Officer",
+              "description": "Overseas spy handler skilled in HUMINT and black operations.",
+              "useForCharacterCreation": true
+            },
+            {
+              "keys": "NSA, signals analyst, SIGINT, codebreaker",
+              "value": "[NSA Signals Analyst]\nSkill Set: interception, decryption, data mining, cyber forensics, pattern analysis.\nEdge: real-time comms access, vast databases.\nLiability: desk-bound, minimal field training.",
+              "type": "class",
+              "title": "NSA Signals Analyst",
+              "description": "Cryptologic specialist monitoring global electronic traffic.",
+              "useForCharacterCreation": true
+            },
+            {
+              "keys": "US Marshal, fugitive task force, witness security",
+              "value": "[US Marshal]\nSkill Set: man-hunting, courtroom security, tactical driving, firearms, extradition logistics.\nEdge: cross-district authority, rapid deputization powers.\nLiability: high-risk warrants, constant travel.",
+              "type": "class",
+              "title": "U.S. Marshal",
+              "description": "Federal officer dedicated to fugitive apprehension and witness protection.",
+              "useForCharacterCreation": true
+            },
+            {
+              "keys": "Secret Service, protective agent, POTUS detail",
+              "value": "[Secret Service Protective Agent]\nSkill Set: close protection, advance scouting, threat assessment, small-unit tactics, counterfeit detection.\nEdge: high-level access, armored motorcades.\nLiability: strict protocols, media exposure.",
+              "type": "class",
+              "title": "Secret Service Agent",
+              "description": "Elite bodyguard specializing in executive security and financial crimes.",
+              "useForCharacterCreation": true
+            },
+            {
+              "keys": "ATF, firearms investigator, explosives, arson",
+              "value": "[ATF Investigator]\nSkill Set: bomb forensics, weapons tracing, undercover gun buys, post-blast analysis.\nEdge: lab support, NIBIN database, civil seizure authority.\nLiability: cartel targets, inter-agency turf wars.",
+              "type": "class",
+              "title": "ATF Investigator",
+              "description": "Specialist in illegal firearms, explosives, and arson cases.",
+              "useForCharacterCreation": true
+            },
+            {
+              "keys": "DEA, drug enforcement, narcotics, undercover",
+              "value": "[DEA Special Agent]\nSkill Set: narcotics interdiction, undercover ops, asset cultivation, surveillance tech.\nEdge: international task forces, asset forfeiture funds.\nLiability: cartel violence, corruption risk.",
+              "type": "class",
+              "title": "DEA Special Agent",
+              "description": "Drug-trade operative experienced in long-term undercover work.",
+              "useForCharacterCreation": true
+            },
+            {
+              "keys": "CDC, epidemiologist, outbreak, field scientist",
+              "value": "[CDC Field Epidemiologist]\nSkill Set: outbreak investigation, biohazard protocols, sample collection, statistical modeling.\nEdge: emergency quarantine authority, BSL-4 lab access.\nLiability: minimal combat training, bureaucratic delays.",
+              "type": "class",
+              "title": "CDC Field Epidemiologist",
+              "description": "Disease detective dispatched to contain biological threats.",
+              "useForCharacterCreation": true
+            },
+            {
+              "keys": "IRS-CI, financial crimes, forensic accountant, treasury",
+              "value": "[IRS Criminal Investigator]\nSkill Set: forensic accounting, money-laundering tracing, subpoena powers, undercover finance stings.\nEdge: access to tax records, asset seizure tools.\nLiability: limited armed backup, complex paperwork.",
+              "type": "class",
+              "title": "IRS Criminal Investigator",
+              "description": "Treasury agent following money trails to expose criminal networks.",
+              "useForCharacterCreation": true
+            },
+            {
+              "keys": "DHS, customs, border protection, CBP officer",
+              "value": "[CBP Tactical Officer]\nSkill Set: interdiction, cargo inspection, K-9 handling, tactical boarding, immigration law.\nEdge: port-of-entry authority, rapid deployment teams.\nLiability: resource stretch, political scrutiny.",
+              "type": "class",
+              "title": "CBP Tactical Officer",
+              "description": "Front-line specialist intercepting contraband at borders and ports.",
+              "useForCharacterCreation": true
+            },
+            {
+              "keys": "Diplomatic Security, DSS, embassy guard, foreign service",
+              "value": "[Diplomatic Security Service Agent]\nSkill Set: embassy protection, passport fraud investigation, high-risk motorcade driving, small-team leadership.\nEdge: extraterritorial cover, interagency liaisons.\nLiability: thin staffing, volatile host nations.",
+              "type": "class",
+              "title": "DSS Special Agent",
+              "description": "Foreign Service law-enforcement officer guarding diplomats and probing threats abroad.",
+              "useForCharacterCreation": true
+            },
+            {
+              "keys": "FEMA, emergency manager, disaster response",
+              "value": "[FEMA Field Coordinator]\nSkill Set: incident command, logistics procurement, interagency coordination, public-info briefings.\nEdge: federal resource mobilization, Stafford Act authority.\nLiability: political blame, limited personal security.",
+              "type": "class",
+              "title": "FEMA Field Coordinator",
+              "description": "Crisis manager orchestrating federal aid during disasters and mass-casualty events.",
+              "useForCharacterCreation": true
+            },
+            {
+              "keys": "cell system, three agents, A-Cell, compartmentalization, code letters",
+              "value": "Three-agent teams named A–Z; remote handler; compartmentalizes knowledge; created 1994 after Fairfield death.",
+              "type": "concept",
+              "title": "Delta Green Cell Protocol",
+              "description": "Core operational unit enforcing secrecy.",
+              "useForCharacterCreation": false
+            },
+            {
+              "keys": "friendlies, civilian assets, informants, medics, forensics",
+              "value": "Non-agent helpers with niche skills; limited intel; activated mission-by-mission; cut loose if compromised.",
+              "type": "concept",
+              "title": "Friendly Network",
+              "description": "Volunteer assets leveraged by cells.",
+              "useForCharacterCreation": false
+            },
+            {
+              "keys": "green box, cache, stash, evidence locker, safe house",
+              "value": "Anonymous storage sites in rentals or lockers; hold weapons, occult items, documents; coordinates shared only on need-to-know.",
+              "type": "location",
+              "title": "Green Box",
+              "description": "Hidden gear and Mythos debris cache.",
+              "useForCharacterCreation": false
+            },
+            {
+              "keys": "burn protocol, cover-up, evidence purge, emergency cleanup",
+              "value": "Extreme measure: bodies destroyed, records erased, witnesses silenced; invoked when exposure imminent or agent corrupted.",
+              "type": "procedure",
+              "title": "Burn Protocol",
+              "description": "Last-ditch secrecy safeguard.",
+              "useForCharacterCreation": false
+            },
+            {
+              "keys": "NRO DELTA, satellite SIGINT, cosmic anomaly tracking, Program eyes",
+              "value": "Black unit inside National Recon Office; filters orbital data for non-human signals; feeds Program targeting intel.",
+              "type": "faction",
+              "title": "NRO DELTA",
+              "description": "Signals branch watching the sky.",
+              "useForCharacterCreation": false
+            },
+            {
+              "keys": "Majestic Accord, Greys treaty, 1947 pact, alien technology",
+              "value": "Secret deal: Greys get human abductions, Majestic gains advanced tech; cornerstone of Majestic power.",
+              "type": "event",
+              "title": "Majestic Accord",
+              "description": "1947 treaty trading lives for knowledge.",
+              "useForCharacterCreation": false
+            },
+            {
+              "keys": "Operation COVENANT, Innsmouth raid, Deep Ones, 1928 origin",
+              "value": "Federal assault on Innsmouth; hybrids captured, town razed; birthed Delta Green mission.",
+              "type": "event",
+              "title": "Operation COVENANT",
+              "description": "Foundational victory over Deep Ones.",
+              "useForCharacterCreation": false
+            },
+            {
+              "keys": "Operation OBSIDIAN, Cambodia, Angka, 1969 disaster",
+              "value": "Unauthorized Marine raid to stop summoning; force annihilated; led to 1970 dissolution of Delta Green.",
+              "type": "event",
+              "title": "Operation OBSIDIAN",
+              "description": "Vietnam-era failure that broke DG.",
+              "useForCharacterCreation": false
+            },
+            {
+              "keys": "Schism, Program vs Outlaws, 2002 split, internal conflict",
+              "value": "Official Program accepts federal backing; Outlaws reject merger; silent civil war under same banner.",
+              "type": "event",
+              "title": "The Schism",
+              "description": "Modern divide within Delta Green.",
+              "useForCharacterCreation": false
+            },
+            {
+              "keys": "Fairfield Project, archives, lore vault, research bureau",
+              "value": "Classified think-tank preserving Mythos case files, artifacts, autopsy data; access restricted to cleared handlers.",
+              "type": "organization",
+              "title": "Fairfield Project",
+              "description": "Delta Green’s knowledge repository.",
+              "useForCharacterCreation": false
+            },
+            {
+                  "keys": "Outlook Group, parapsychology division, psychic children, remote viewing",
+                  "value": "USDA-front think tank in rural Montana; harvests gifted children for covert telepathy research; subjects disappear after “graduation.”",
+                  "type": "faction",
+                  "title": "Outlook Group",
+                  "description": "Secret federal psi-program masquerading as agricultural research.",
+                  "useForCharacterCreation": false
+                },
+                {
+                  "keys": "Phenomenological Research Group, PRG, occult academics, midnight journal",
+                  "value": "Ivy-League professors exchanging Mythos data through an encrypted samizdat; scholarly but reckless; sells findings to hedge-fund occultists for endowment cash.",
+                  "type": "faction",
+                  "title": "Phenomenological Research Group",
+                  "description": "Academic circle trafficking forbidden knowledge for prestige and profit.",
+                  "useForCharacterCreation": false
+                },
+                {
+                  "keys": "Elder Things, Antarctic aliens, prehuman scientists, fossil city",
+                  "value": "Ancient cone-shaped beings entombed beneath the Antarctic Plateau; frozen biotech labs, stored spores, buried disdain for mammals.",
+                  "type": "entity",
+                  "title": "Elder Things",
+                  "description": "Ice-bound alien civilization awaiting thaw to resume experiments.",
+                  "useForCharacterCreation": false
+                },
+                {
+                  "keys": "Colour out of Space, radiant parasite, farmland blight",
+                  "value": "Non-corporeal energy lifeform falling as meteor; drains life, leaves grey ash; spectrum impossible to record; containment demands total site sterilization.",
+                  "type": "anomaly",
+                  "title": "The Colour",
+                  "description": "Invisible radiation entity that feeds on biological essence.",
+                  "useForCharacterCreation": false
+                },
+                {
+                  "keys": "Project PLUTO, nuclear skeptics, drone sarcophagus, Nevada Test Site",
+                  "value": "Abandoned nuclear-ramjet weapons test house; warhead storage tunnels repurposed as Mythos specimen vault; half the locks failed decades ago.",
+                  "type": "location",
+                  "title": "PLUTO Bunker",
+                  "description": "Derelict Nevada tunnel complex hiding unstable occult artifacts.",
+                  "useForCharacterCreation": false
+                },
+                {
+                  "keys": "Brooklyn Dream House, brownstone, oneirogenic field, sleepwalk cult",
+                  "value": "1890s townhouse where tenants share identical nightmares; an unseen architect sketches new rooms nightly; dreamers vanish on completion.",
+                  "type": "location",
+                  "title": "Brooklyn Dream House",
+                  "description": "Haunted brownstone rewriting itself through shared dreams.",
+                  "useForCharacterCreation": false
+                },
+                {
+                  "keys": "Project LONGHAUL, DOT cover, cursed highways, phantom exits",
+                  "value": "Federal task force mapping stretches of interstate where time dilates and travelers disappear; maintains fake construction to reroute traffic.",
+                  "type": "faction",
+                  "title": "Project LONGHAUL",
+                  "description": "DOT black-budget unit containing roadway anomalies.",
+                  "useForCharacterCreation": false
+                },
+                {
+                  "keys": "Operation NORTHERN LIGHT, 1983, Arctic gate, vanished platoon",
+                  "value": "Cold-War Canadian mission opened stone arch in Nunavut; aurora became solid, swallowed 27 men; gate still flickers yearly at winter solstice.",
+                  "type": "event",
+                  "title": "NORTHERN LIGHT Incident",
+                  "description": "Lost platoon and recurring polar dimensional breach.",
+                  "useForCharacterCreation": false
+                },
+                {
+                  "keys": "Edison Cylinder 0, wax recording, impossible voiceprint, memetic hazard",
+                  "value": "Unlabeled 1890 prototype cylinder; playback induces glossolalia and fatal self-mutilation within 72 hours; cannot be digitally copied.",
+                  "type": "anomaly",
+                  "title": "Edison Cylinder Zero",
+                  "description": "Prototype recording carrying lethal auditory meme.",
+                  "useForCharacterCreation": false
+                },
+                {
+                  "keys": "Sub-Basement 7, Federal Plaza NYC, sunken file room, living paper",
+                  "value": "Flood-sealed records vault beneath 26 Federal Plaza; soaked FOIA files merged into fungal hybrid that rewrites classified text overnight.",
+                  "type": "location",
+                  "title": "Sub-Basement 7",
+                  "description": "Mycological document hive growing under Manhattan.",
+                  "useForCharacterCreation": false
+                }
+]
